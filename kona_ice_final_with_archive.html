@@ -1,0 +1,752 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:14px}
+:root{
+  --kona-navy:#0a1628;--kona-navy-mid:#112040;--kona-card:#132038;
+  --kona-cyan:#00b4d8;--kona-cyan-light:#90e0ef;
+  --kona-text-muted:#7eb8cc;--kona-white:#ffffff;
+  --kona-red:#e84b4b;--kona-red-light:rgba(232,75,75,0.15);
+  --kona-green:#00c48c;--kona-green-light:rgba(0,196,140,0.15);
+  --kona-amber:#f0a500;--kona-amber-light:rgba(240,165,0,0.15);
+  --kona-card-border:rgba(0,180,216,0.2);
+}
+.app{max-width:980px;margin:0 auto;color:var(--kona-white)}
+.kona-header{background:var(--kona-navy);border-bottom:2px solid var(--kona-cyan);padding:12px 16px;display:flex;align-items:center;gap:12px;border-radius:12px 12px 0 0}
+.kona-logo{width:40px;height:40px;border-radius:50%;background:var(--kona-cyan);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--kona-navy);flex-shrink:0}
+.kona-title{font-size:17px;font-weight:600;color:var(--kona-white)}
+.kona-sub{font-size:12px;color:var(--kona-text-muted)}
+.tab-bar{display:flex;background:var(--kona-navy);border-bottom:1px solid var(--kona-card-border)}
+.tab{flex:1;padding:11px 6px;border:none;background:none;cursor:pointer;font-size:13px;color:var(--kona-text-muted);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--font-sans)}
+.tab.active{color:var(--kona-cyan);border-bottom-color:var(--kona-cyan);font-weight:500}
+.content{background:var(--kona-navy-mid);padding:14px;border-radius:0 0 12px 12px}
+.section{display:none}.section.active{display:block}
+.card{background:var(--kona-card);border:0.5px solid var(--kona-card-border);border-radius:10px;padding:14px;margin-bottom:12px}
+.card-title{font-size:15px;font-weight:500;color:var(--kona-white);margin-bottom:8px}
+.card-hint{font-size:12px;color:var(--kona-text-muted);margin-bottom:10px;line-height:1.5}
+label{font-size:11px;color:var(--kona-text-muted);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.4px}
+input[type=text],input[type=date],textarea{width:100%;padding:10px;border:1px solid var(--kona-card-border);border-radius:8px;font-size:15px;background:var(--kona-navy);color:var(--kona-white);font-family:var(--font-sans)}
+input[type=text]:focus,input[type=date]:focus,textarea:focus{outline:none;border-color:var(--kona-cyan)}
+input::placeholder,textarea::placeholder{color:var(--kona-text-muted)}
+textarea{resize:vertical;min-height:70px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+@media(max-width:500px){.form-row,.form-row-3{grid-template-columns:1fr}}
+.btn{padding:10px 18px;border-radius:8px;border:1px solid var(--kona-card-border);background:var(--kona-navy);color:var(--kona-white);cursor:pointer;font-size:14px;font-family:var(--font-sans)}
+.btn:hover{border-color:var(--kona-cyan);color:var(--kona-cyan)}
+.btn.primary{background:var(--kona-cyan);color:var(--kona-navy);border-color:var(--kona-cyan);font-weight:700;font-size:16px;width:100%;padding:14px}
+.btn.primary:hover{background:var(--kona-cyan-light)}
+.btn.sm{padding:6px 12px;font-size:12px}
+.btn.danger-sm{padding:6px 12px;font-size:12px;color:var(--kona-red);border-color:rgba(232,75,75,0.35);background:var(--kona-red-light)}
+.btn.amber-sm{padding:6px 12px;font-size:12px;color:var(--kona-amber);border-color:rgba(240,165,0,0.35);background:var(--kona-amber-light)}
+.success-box{background:var(--kona-green-light);border:1px solid rgba(0,196,140,0.4);border-radius:8px;padding:12px;color:var(--kona-green);font-size:14px;display:none;margin-bottom:12px;line-height:1.5}
+.locked-box{background:var(--kona-amber-light);border:1px solid rgba(240,165,0,0.4);border-radius:8px;padding:14px;color:var(--kona-amber);font-size:14px;margin-bottom:12px;line-height:1.6;display:none}
+.off-week-btn{width:100%;padding:12px;border:1px solid rgba(232,75,75,0.4);border-radius:8px;background:var(--kona-red-light);color:var(--kona-red);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-sans);margin-bottom:12px;text-align:center}
+.off-week-btn.active{background:var(--kona-red);color:#fff;border-color:var(--kona-red)}
+.day-card{background:var(--kona-card);border:0.5px solid var(--kona-card-border);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.day-card.off{opacity:0.55}
+.day-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer}
+.day-name-big{font-size:16px;font-weight:600;color:var(--kona-white)}
+.day-date-small{font-size:12px;color:var(--kona-text-muted);margin-top:1px}
+.toggle{width:46px;height:26px;border-radius:13px;background:rgba(255,255,255,0.1);position:relative;flex-shrink:0;cursor:pointer}
+.toggle.on{background:var(--kona-cyan)}
+.toggle-knob{width:20px;height:20px;border-radius:50%;background:var(--kona-white);position:absolute;top:3px;left:3px;transition:left 0.15s}
+.toggle.on .toggle-knob{left:23px}
+.day-body{padding:0 14px 14px;display:none}
+.day-card.on .day-body{display:block}
+.shift-pills{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.shift-pill{padding:7px 12px;border:1px solid var(--kona-card-border);border-radius:20px;font-size:13px;color:var(--kona-text-muted);cursor:pointer;background:var(--kona-navy);font-family:var(--font-sans);white-space:nowrap}
+.shift-pill.active{background:rgba(0,180,216,0.15);border-color:var(--kona-cyan);color:var(--kona-cyan);font-weight:500}
+.range-wrap{position:relative;padding:10px 0;margin-bottom:6px;user-select:none;touch-action:none}
+.range-track{height:6px;background:rgba(0,180,216,0.12);border-radius:3px;position:relative}
+.range-fill{height:6px;background:var(--kona-cyan);border-radius:3px;position:absolute;top:0}
+.range-handle{width:26px;height:26px;border-radius:50%;background:var(--kona-cyan);border:3px solid var(--kona-navy);position:absolute;top:50%;transform:translate(-50%,-50%);cursor:grab;touch-action:none;z-index:2}
+.range-time-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--kona-text-muted);margin-bottom:4px}
+.range-selected{text-align:center;font-size:14px;font-weight:500;color:var(--kona-cyan);margin-bottom:4px}
+.vac-entry{background:var(--kona-navy);border-radius:8px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;border:0.5px solid var(--kona-card-border)}
+.vac-remove{background:none;border:none;cursor:pointer;color:var(--kona-text-muted);font-size:20px;line-height:1;padding:0 2px}
+.vac-remove:hover{color:var(--kona-red)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.stat{background:var(--kona-card);border:0.5px solid var(--kona-card-border);border-radius:10px;padding:12px;text-align:center}
+.stat-num{font-size:22px;font-weight:600;color:var(--kona-cyan)}
+.stat-lbl{font-size:11px;color:var(--kona-text-muted);margin-top:2px}
+.day-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.day-tab{padding:6px 13px;border:1px solid var(--kona-card-border);border-radius:20px;cursor:pointer;font-size:13px;background:var(--kona-navy);color:var(--kona-text-muted);font-family:var(--font-sans);white-space:nowrap}
+.day-tab.active{background:var(--kona-cyan);color:var(--kona-navy);border-color:var(--kona-cyan);font-weight:600}
+.dash-layout{display:grid;grid-template-columns:1fr 300px;gap:14px;align-items:start}
+@media(max-width:680px){.dash-layout{grid-template-columns:1fr}}
+table.dash{border-collapse:collapse;width:100%;font-size:12px}
+table.dash th{padding:5px 3px;text-align:center;font-weight:500;color:var(--kona-text-muted);border-bottom:1px solid var(--kona-card-border);white-space:nowrap}
+table.dash th.tc{text-align:left;padding-left:4px;min-width:54px}
+table.dash td{padding:2px 3px;text-align:center}
+table.dash td.tc{text-align:left;padding-left:4px;font-size:11px;color:var(--kona-text-muted);white-space:nowrap}
+.dcell{width:26px;height:20px;border-radius:3px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;cursor:pointer}
+.dcell:hover{outline:2px solid var(--kona-cyan)}
+.dcell.selected{outline:2px solid var(--kona-cyan);outline-offset:1px}
+.detail-panel{background:var(--kona-navy);border:0.5px solid var(--kona-card-border);border-radius:10px;padding:12px;position:sticky;top:1rem}
+.empty-detail{text-align:center;padding:1.5rem 0;color:var(--kona-text-muted);font-size:13px}
+.avatar{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0}
+.person-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--kona-card-border)}
+.person-row:last-child{border-bottom:none}
+.sec-label{font-size:10px;font-weight:500;color:var(--kona-text-muted);text-transform:uppercase;letter-spacing:0.5px;margin:8px 0 5px}
+.avail-bar-wrap{flex:1;position:relative;height:16px;background:var(--kona-navy-mid);border-radius:3px;overflow:hidden;border:1px solid var(--kona-card-border);min-width:60px}
+.avail-bar{position:absolute;top:0;height:100%;border-radius:2px}
+.emp-row{padding:10px 0;border-bottom:1px solid var(--kona-card-border)}
+.emp-row:last-child{border-bottom:none}
+.badge{padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(0,180,216,0.15);color:var(--kona-cyan);border:1px solid rgba(0,180,216,0.3)}
+.badge-off{background:var(--kona-red-light);color:var(--kona-red);border-color:rgba(232,75,75,0.3)}
+.comment-bubble{background:var(--kona-navy);border-left:3px solid var(--kona-cyan);border-radius:0 8px 8px 0;padding:8px 12px;font-size:13px;color:var(--kona-white);line-height:1.5;margin-top:4px}
+.vac-owner-row{padding:9px 0;border-bottom:1px solid var(--kona-card-border)}
+.vac-owner-row:last-child{border-bottom:none}
+.no-data{color:var(--kona-text-muted);font-size:13px;text-align:center;padding:1.5rem 0}
+.legend{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--kona-text-muted);margin-bottom:8px;flex-wrap:wrap}
+.lswatch{width:16px;height:12px;border-radius:2px;display:inline-block;vertical-align:middle}
+.owner-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.modal-backdrop{background:rgba(0,0,0,0.7);border-radius:10px;padding:20px;margin-bottom:12px;display:none}
+.modal-backdrop.open{display:block}
+.modal-inner{background:var(--kona-card);border:1px solid var(--kona-cyan);border-radius:12px;padding:16px}
+.modal-title{font-size:15px;font-weight:600;color:var(--kona-cyan);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.modal-close{background:none;border:none;color:var(--kona-text-muted);font-size:20px;cursor:pointer;line-height:1}
+.edit-day-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--kona-card-border)}
+.edit-day-row:last-child{border-bottom:none}
+.edit-toggle{width:38px;height:22px;border-radius:11px;background:rgba(255,255,255,0.1);position:relative;flex-shrink:0;cursor:pointer}
+.edit-toggle.on{background:var(--kona-cyan)}
+.edit-toggle-knob{width:16px;height:16px;border-radius:50%;background:var(--kona-white);position:absolute;top:3px;left:3px;transition:left 0.15s}
+.edit-toggle.on .edit-toggle-knob{left:19px}
+
+/* New-week confirm box */
+.newweek-confirm{background:rgba(0,180,216,0.08);border:1px solid rgba(0,180,216,0.35);border-radius:10px;padding:16px;margin-bottom:12px;display:none}
+.newweek-confirm.open{display:block}
+
+/* Archive */
+.archive-week{background:var(--kona-card);border:0.5px solid var(--kona-card-border);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.archive-week-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer}
+.archive-week-body{display:none;padding:0 14px 14px}
+.archive-week.open .archive-week-body{display:block}
+.archive-emp-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--kona-card-border)}
+.archive-emp-row:last-child{border-bottom:none}
+.archive-week-selector{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.archive-pill{padding:6px 14px;border:1px solid var(--kona-card-border);border-radius:20px;cursor:pointer;font-size:13px;background:var(--kona-navy);color:var(--kona-text-muted);font-family:var(--font-sans);white-space:nowrap}
+.archive-pill.active{background:rgba(0,180,216,0.15);border-color:var(--kona-cyan);color:var(--kona-cyan);font-weight:500}
+</style>
+
+<div style="background:var(--kona-navy);border-radius:12px;overflow:hidden">
+  <div class="kona-header">
+    <div class="kona-logo">K</div>
+    <div>
+      <div class="kona-title">Kona Ice Crew Scheduler</div>
+      <div class="kona-sub" id="mainSub">Season 2025</div>
+    </div>
+  </div>
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('employee',this)">Submit availability</button>
+    <button class="tab" onclick="switchTab('owner',this)">Owner dashboard</button>
+    <button class="tab" onclick="switchTab('archive',this)">Archive</button>
+  </div>
+  <div class="content">
+
+    <!-- ══ EMPLOYEE ══ -->
+    <div id="employee" class="section active">
+      <div id="successMsg" class="success-box"></div>
+      <div id="lockedMsg" class="locked-box"></div>
+      <div class="card">
+        <div class="card-title">Your info</div>
+        <div class="form-row">
+          <div><label>Your name</label><input type="text" id="empName" placeholder="Alex Johnson" oninput="checkLocked()"></div>
+          <div><label>Phone number</label><input type="text" id="empPhone" placeholder="206-555-1234"></div>
+        </div>
+      </div>
+      <div id="formBody">
+        <button class="off-week-btn" id="offWeekBtn" onclick="toggleOffWeek()">Unavailable all week</button>
+        <div id="dayCardsWrap"></div>
+        <div class="card">
+          <div class="card-title">Going on vacation or to camp this summer?</div>
+          <div class="card-hint">If you know you'll be gone for a stretch of days, let us know so we can plan ahead.</div>
+          <div id="vacList"></div>
+          <div class="form-row-3" style="margin-top:10px">
+            <div><label>From</label><input type="date" id="vacFrom"></div>
+            <div><label>To</label><input type="date" id="vacTo"></div>
+            <div><label>Reason (optional)</label><input type="text" id="vacNote" placeholder="Family vacation…"></div>
+          </div>
+          <button class="btn sm" onclick="addVacation()">+ Add time off</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Anything else we should know?</div>
+          <div class="card-hint">Recurring commitments, preferences, or a heads up for the owner.</div>
+          <textarea id="empComment" rows="3" placeholder="e.g. I have a standing appointment every Tuesday morning until noon…"></textarea>
+        </div>
+        <button class="btn primary" onclick="submitForm()">Submit availability</button>
+        <div style="text-align:center;margin-top:10px"><button class="btn sm" onclick="resetForm()" style="font-size:12px">Clear form</button></div>
+      </div>
+    </div>
+
+    <!-- ══ OWNER DASHBOARD ══ -->
+    <div id="owner" class="section">
+      <div class="owner-header">
+        <div style="font-size:15px;font-weight:500">Week of <span id="weekOf" style="color:var(--kona-cyan)"></span></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn sm" style="background:#00b4d8;color:#0a1628;border-color:#00b4d8;font-weight:600" onclick="showNewWeekConfirm()">Start new week</button>
+          <button class="btn sm" onclick="loadDemo()" style="color:var(--kona-cyan);border-color:rgba(0,180,216,0.35)">Load demo</button>
+          <button class="btn sm" onclick="clearCurrent()">Clear all</button>
+        </div>
+      </div>
+
+      <!-- New week confirm -->
+      <div class="newweek-confirm" id="newWeekConfirm">
+        <div style="font-size:14px;font-weight:500;color:var(--kona-cyan);margin-bottom:6px">Start new week?</div>
+        <div style="font-size:13px;color:var(--kona-text-muted);margin-bottom:12px;line-height:1.6">This will archive this week's <strong id="nwCount" style="color:var(--kona-white)">0</strong> submissions and open a fresh week for your crew to submit. You can view archived weeks anytime in the Archive tab.</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn sm" style="background:var(--kona-cyan);color:var(--kona-navy);border-color:var(--kona-cyan);font-weight:600" onclick="confirmNewWeek()">Yes, archive and start fresh</button>
+          <button class="btn sm" onclick="hideNewWeekConfirm()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num" id="statResponded">0</div><div class="stat-lbl">Responded</div></div>
+        <div class="stat"><div class="stat-num" id="statSlots">0</div><div class="stat-lbl">Total slots</div></div>
+        <div class="stat"><div class="stat-num" id="statPeak">—</div><div class="stat-lbl">Busiest day</div></div>
+      </div>
+      <div class="card" style="padding:12px">
+        <div style="font-size:11px;color:var(--kona-text-muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Select a day</div>
+        <div class="day-tabs" id="dayTabs"></div>
+      </div>
+      <div class="dash-layout">
+        <div class="card" style="padding:12px">
+          <div style="font-size:14px;font-weight:500;margin-bottom:4px" id="gridTitle">Availability grid</div>
+          <div class="legend">
+            <span>People available:</span>
+            <span><span class="lswatch" style="background:rgba(0,180,216,0.15);border:1px solid rgba(0,180,216,0.2)"></span>1</span>
+            <span><span class="lswatch" style="background:rgba(0,180,216,0.5)"></span>3–4</span>
+            <span><span class="lswatch" style="background:rgba(0,180,216,0.9)"></span>6–7</span>
+          </div>
+          <div class="card-hint">Click a cell to see everyone's full shift window.</div>
+          <div style="overflow-x:auto"><table class="dash" id="dashTable"></table></div>
+        </div>
+        <div class="detail-panel" id="detailPanel">
+          <div class="empty-detail"><div style="font-size:26px;margin-bottom:8px">👆</div><div>Click a cell to see<br>who's available and<br>their full shift window</div></div>
+        </div>
+      </div>
+
+      <!-- Edit modal -->
+      <div class="modal-backdrop" id="editModal">
+        <div class="modal-inner">
+          <div class="modal-title">
+            <span id="editModalTitle">Edit availability</span>
+            <button class="modal-close" onclick="closeEdit()">×</button>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:12px;color:var(--kona-text-muted);margin-bottom:6px">Quick actions</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn sm" onclick="editMarkOffWeek()" style="color:var(--kona-red);border-color:rgba(232,75,75,0.35);background:var(--kona-red-light)">Mark off all week</button>
+              <button class="btn sm" onclick="editClearSubmission()">Remove submission</button>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--kona-text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.4px">Toggle days on/off</div>
+          <div id="editDayList"></div>
+          <div style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end">
+            <button class="btn sm" onclick="closeEdit()">Cancel</button>
+            <button class="btn sm" onclick="saveEdit()" style="background:var(--kona-cyan);color:var(--kona-navy);border-color:var(--kona-cyan);font-weight:600">Save changes</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card"><div class="card-title" style="margin-bottom:4px">Staff notes</div><div id="ownerComments"><p class="no-data">No comments yet.</p></div></div>
+      <div class="card"><div class="card-title" style="margin-bottom:4px">Upcoming time off</div><div id="ownerVacList"><p class="no-data">No upcoming time off reported.</p></div></div>
+      <div class="card"><div class="card-title" style="margin-bottom:4px">All responses</div><div id="empList"><p class="no-data">No responses yet.</p></div></div>
+    </div>
+
+    <!-- ══ ARCHIVE ══ -->
+    <div id="archive" class="section">
+      <div style="font-size:15px;font-weight:500;margin-bottom:12px">Past weeks</div>
+      <div id="archiveContent"><p class="no-data">No archived weeks yet. When you start a new week, the current week's responses will appear here.</p></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const DAY_FULL=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const AVATAR_COLORS=[
+  {bg:'rgba(0,180,216,0.2)',fg:'#90e0ef'},{bg:'rgba(0,196,140,0.2)',fg:'#00c48c'},
+  {bg:'rgba(255,180,0,0.2)',fg:'#ffd166'},{bg:'rgba(200,100,220,0.2)',fg:'#d4a0e8'},
+  {bg:'rgba(255,120,80,0.2)',fg:'#ffaa88'},{bg:'rgba(80,180,255,0.2)',fg:'#80c8ff'},
+  {bg:'rgba(255,200,80,0.2)',fg:'#ffe066'}
+];
+
+function getNextMonday(from){
+  const n=from||new Date(),d=n.getDay(),m=new Date(n);
+  m.setDate(n.getDate()+(d===0?1:8-d));m.setHours(0,0,0,0);return m;
+}
+function getWeekDates(mon){
+  const m=mon||getNextMonday();
+  return DAYS.map((_,i)=>{const d=new Date(m);d.setDate(m.getDate()+i);return d;});
+}
+
+// Current week anchor stored in localStorage
+function getCurrentMonday(){
+  try{
+    const s=localStorage.getItem('kona_week_start');
+    if(s)return new Date(s);
+  }catch{}
+  const m=getNextMonday();
+  saveCurrentMonday(m);
+  return m;
+}
+function saveCurrentMonday(m){
+  try{localStorage.setItem('kona_week_start',m.toISOString());}catch{}
+}
+
+let CURRENT_MONDAY=getCurrentMonday();
+let WD=getWeekDates(CURRENT_MONDAY);
+
+function fmtDate(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+function fmtDateFull(s){if(!s)return'';const d=new Date(s+'T12:00:00');return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function fmtWeekRange(mon){const wd=getWeekDates(mon);return`${fmtDate(wd[0])} – ${fmtDate(wd[6])}`;}
+function genSlots(){const s=[];for(let h=9;h<23;h++)for(let m=0;m<60;m+=30){const h12=h>12?h-12:h===0?12:h,ap=h<12?'AM':'PM';s.push({h,m,label:`${h12}:${m===0?'00':'30'} ${ap}`});}return s;}
+const SLOTS=genSlots();
+const TOTAL_SLOTS=SLOTS.length;
+const DAY_START_MIN=9*60,DAY_SPAN=14*60;
+function slotMinutes(si){return SLOTS[si].h*60+SLOTS[si].m;}
+function fmtSlot(si){if(si<0||si>=TOTAL_SLOTS)return'—';const s=SLOTS[si],h12=s.h>12?s.h-12:s.h===0?12:s.h,ap=s.h<12?'AM':'PM';return`${h12}:${s.m===0?'00':'30'} ${ap}`;}
+function fmtBlockEnd(si){return si+1>=TOTAL_SLOTS?'11:00 PM':fmtSlot(si+1);}
+
+// Storage
+function getStorage(){try{const d=localStorage.getItem('kona_current');return d?JSON.parse(d):[];}catch{return[];}}
+function setStorage(d){try{localStorage.setItem('kona_current',JSON.stringify(d));}catch{}}
+function getArchive(){try{const d=localStorage.getItem('kona_archive');return d?JSON.parse(d):[];}catch{return[];}}
+function setArchive(d){try{localStorage.setItem('kona_archive',JSON.stringify(d));}catch{}}
+
+let selectedDay=0,selectedCell=null,offWeek=false,pendingVacs=[];
+const dayState=WD.map(()=>({on:false,startSi:8,endSi:19}));
+
+// ── New week ──
+function showNewWeekConfirm(){
+  const data=getStorage();
+  document.getElementById('nwCount').textContent=data.length;
+  document.getElementById('newWeekConfirm').classList.add('open');
+}
+function hideNewWeekConfirm(){document.getElementById('newWeekConfirm').classList.remove('open');}
+
+function confirmNewWeek(){
+  const data=getStorage();
+  if(data.length>0){
+    const archive=getArchive();
+    archive.unshift({
+      weekStart:CURRENT_MONDAY.toISOString(),
+      weekLabel:fmtWeekRange(CURRENT_MONDAY),
+      archivedAt:new Date().toISOString(),
+      responses:data
+    });
+    setArchive(archive);
+  }
+  // Advance to next Monday from today
+  const newMon=getNextMonday(new Date());
+  CURRENT_MONDAY=newMon;
+  WD=getWeekDates(newMon);
+  saveCurrentMonday(newMon);
+  setStorage([]);
+  hideNewWeekConfirm();
+  selectedCell=null;
+  rebuildDayCards();
+  renderDashboard();
+  updateWeekLabels();
+  // Show quick confirmation
+  const box=document.getElementById('successMsg');
+  box.innerHTML=`<strong>New week started!</strong> The week of ${fmtWeekRange(newMon)} is now open. Archive saved — check the Archive tab anytime.`;
+  box.style.display='block';
+  setTimeout(()=>box.style.display='none',6000);
+}
+
+function updateWeekLabels(){
+  document.getElementById('weekOf').textContent=fmtWeekRange(CURRENT_MONDAY);
+  document.getElementById('weekRangeEmpSpan').textContent=`— ${fmtDate(WD[0])} to ${fmtDate(WD[6])}`;
+  document.getElementById('mainSub').textContent=`Season 2025 · Week of ${fmtDate(WD[0])}`;
+}
+
+// ── Lock check ──
+function checkLocked(){
+  const name=document.getElementById('empName').value.trim().toLowerCase();
+  const data=getStorage();
+  const existing=data.find(e=>e.name.toLowerCase()===name);
+  const locked=document.getElementById('lockedMsg');
+  const body=document.getElementById('formBody');
+  if(existing){
+    locked.style.display='block';
+    locked.innerHTML=`<strong>Already submitted!</strong> We already have your availability for the week of ${fmtDate(WD[0])}–${fmtDate(WD[6])}. If you need to make changes, please text or talk to your manager.`;
+    body.style.display='none';
+  } else {
+    locked.style.display='none';
+    body.style.display='block';
+  }
+}
+
+function pctToSlot(p){return Math.round(p/100*(TOTAL_SLOTS-1));}
+function slotToPct(si){return si/(TOTAL_SLOTS-1)*100;}
+
+function buildDayCards(){
+  const wrap=document.getElementById('dayCardsWrap');
+  wrap.innerHTML=WD.map((d,di)=>`
+    <div class="day-card" id="dc_${di}">
+      <div class="day-card-header" onclick="toggleDay(${di})">
+        <div><div class="day-name-big">${DAY_FULL[di]}</div><div class="day-date-small">${fmtDate(d)}</div></div>
+        <div class="toggle" id="tog_${di}"><div class="toggle-knob"></div></div>
+      </div>
+      <div class="day-body" id="db_${di}">
+        <div class="shift-pills">
+          <div class="shift-pill" onclick="setShift(${di},9,13)">Morning</div>
+          <div class="shift-pill" onclick="setShift(${di},13,18)">Afternoon</div>
+          <div class="shift-pill" onclick="setShift(${di},18,23)">Evening</div>
+          <div class="shift-pill" onclick="setShift(${di},9,23)">All day</div>
+        </div>
+        <div class="range-time-labels"><span>9 AM</span><span>1 PM</span><span>5 PM</span><span>9 PM</span><span>11 PM</span></div>
+        <div class="range-wrap"><div class="range-track" id="rt_${di}">
+          <div class="range-fill" id="rf_${di}"></div>
+          <div class="range-handle" id="rhl_${di}"></div>
+          <div class="range-handle" id="rhr_${di}"></div>
+        </div></div>
+        <div class="range-selected" id="rs_${di}"></div>
+      </div>
+    </div>`).join('');
+  WD.forEach((_,di)=>initSlider(di));
+}
+
+function rebuildDayCards(){
+  // Reset dayState for new week
+  for(let i=0;i<7;i++){dayState[i]={on:false,startSi:8,endSi:19};}
+  buildDayCards();
+}
+
+function toggleDay(di){
+  if(offWeek)return;
+  dayState[di].on=!dayState[di].on;
+  document.getElementById(`dc_${di}`).classList.toggle('on',dayState[di].on);
+  document.getElementById(`dc_${di}`).classList.toggle('off',!dayState[di].on);
+  document.getElementById(`tog_${di}`).classList.toggle('on',dayState[di].on);
+  updateRangeDisplay(di);
+}
+function setShift(di,sh,eh){
+  if(!dayState[di].on)return;
+  const s=SLOTS.findIndex(x=>x.h===sh&&x.m===0);
+  let e=SLOTS.findIndex(x=>x.h===eh&&x.m===0);
+  if(e<0)e=TOTAL_SLOTS-1;else e=Math.max(0,e-1);
+  dayState[di].startSi=Math.max(0,s);dayState[di].endSi=Math.min(TOTAL_SLOTS-1,e);
+  updateRangeDisplay(di);
+}
+function updateRangeDisplay(di){
+  const st=dayState[di];
+  const lp=slotToPct(st.startSi),rp=slotToPct(st.endSi);
+  const rf=document.getElementById(`rf_${di}`);
+  if(rf){rf.style.left=lp+'%';rf.style.width=(rp-lp)+'%';}
+  const rhl=document.getElementById(`rhl_${di}`);if(rhl)rhl.style.left=lp+'%';
+  const rhr=document.getElementById(`rhr_${di}`);if(rhr)rhr.style.left=rp+'%';
+  const rs=document.getElementById(`rs_${di}`);if(rs)rs.textContent=`${fmtSlot(st.startSi)} — ${fmtBlockEnd(st.endSi)}`;
+}
+function initSlider(di){
+  const track=document.getElementById(`rt_${di}`);if(!track)return;
+  [['rhl_'+di,'left'],['rhr_'+di,'right']].forEach(([id,which])=>{
+    const h=document.getElementById(id);if(!h)return;
+    const onStart=e=>{
+      e.preventDefault();
+      const move=ev=>{
+        const rect=track.getBoundingClientRect();
+        const cx=ev.touches?ev.touches[0].clientX:ev.clientX;
+        let pct=Math.max(0,Math.min(100,(cx-rect.left)/rect.width*100));
+        const si=pctToSlot(pct);
+        if(which==='left'){dayState[di].startSi=Math.min(si,dayState[di].endSi-1);}
+        else{dayState[di].endSi=Math.max(si,dayState[di].startSi+1);}
+        updateRangeDisplay(di);
+      };
+      const up=()=>{['mousemove','mouseup','touchmove','touchend'].forEach((ev,i)=>document.removeEventListener(ev,i<2?move:i===2?move:up));};
+      document.addEventListener('mousemove',move);document.addEventListener('mouseup',up);
+      document.addEventListener('touchmove',move,{passive:false});document.addEventListener('touchend',up);
+    };
+    h.addEventListener('mousedown',onStart);h.addEventListener('touchstart',onStart,{passive:false});
+  });
+  updateRangeDisplay(di);
+}
+function dayStateToAvail(){
+  const avail=[];
+  WD.forEach((_,di)=>{if(dayState[di].on){for(let si=dayState[di].startSi;si<=dayState[di].endSi;si++)avail.push(`${di}_${si}`);}});
+  return avail;
+}
+function toggleOffWeek(){
+  offWeek=!offWeek;
+  const btn=document.getElementById('offWeekBtn'),wrap=document.getElementById('dayCardsWrap');
+  if(offWeek){btn.textContent='Undo — I am available this week';btn.classList.add('active');wrap.style.opacity='0.3';wrap.style.pointerEvents='none';}
+  else{btn.textContent='Unavailable all week';btn.classList.remove('active');wrap.style.opacity='1';wrap.style.pointerEvents='';}
+}
+function addVacation(){
+  const from=document.getElementById('vacFrom').value,to=document.getElementById('vacTo').value,note=document.getElementById('vacNote').value.trim();
+  if(!from||!to){alert('Please enter both a start and end date.');return;}
+  if(to<from){alert('End date must be after start date.');return;}
+  pendingVacs.push({from,to,note});
+  document.getElementById('vacFrom').value='';document.getElementById('vacTo').value='';document.getElementById('vacNote').value='';
+  renderVacList();
+}
+function removeVacation(i){pendingVacs.splice(i,1);renderVacList();}
+function renderVacList(){
+  document.getElementById('vacList').innerHTML=pendingVacs.map((v,i)=>`<div class="vac-entry"><div><div style="font-size:13px;font-weight:500;color:var(--kona-white)">${fmtDateFull(v.from)} – ${fmtDateFull(v.to)}</div>${v.note?`<div style="font-size:12px;color:var(--kona-text-muted);margin-top:2px">${v.note}</div>`:''}</div><button class="vac-remove" onclick="removeVacation(${i})">×</button></div>`).join('');
+}
+function submitForm(){
+  const name=document.getElementById('empName').value.trim();
+  const phone=document.getElementById('empPhone').value.trim();
+  const comment=document.getElementById('empComment').value.trim();
+  if(!name){alert('Please enter your name.');return;}
+  const data=getStorage();
+  if(data.find(e=>e.name.toLowerCase()===name.toLowerCase())){checkLocked();return;}
+  const avail=offWeek?[]:dayStateToAvail();
+  if(!offWeek&&!avail.length){alert('Please toggle on at least one day, or mark yourself unavailable all week.');return;}
+  data.push({name,phone,avail,offWeek,vacations:pendingVacs,comment,submitted:new Date().toISOString()});
+  setStorage(data);
+  const box=document.getElementById('successMsg');
+  const dayNames=WD.map((d,i)=>dayState[i].on?`${DAYS[i]} ${fmtDate(d)}`:null).filter(Boolean);
+  box.innerHTML=offWeek
+    ?`<strong>Got it, ${name}!</strong> You're marked unavailable for the week of ${fmtDate(WD[0])}–${fmtDate(WD[6])}. If anything changes, reach out to your manager.`
+    :`<strong>Thanks, ${name}!</strong> Saved for ${fmtDate(WD[0])}–${fmtDate(WD[6])}.<br>Days: ${dayNames.join(', ')}.${comment?' Your note has been sent.':''}<br><span style="font-size:12px;opacity:0.85">Need to make changes? Text or talk to your manager.</span>`;
+  box.style.display='block';
+  document.getElementById('empName').value='';document.getElementById('empPhone').value='';
+  pendingVacs=[];resetForm();checkLocked();
+  setTimeout(()=>box.style.display='none',8000);
+}
+function resetForm(){
+  offWeek=false;
+  document.getElementById('offWeekBtn').textContent='Unavailable all week';
+  document.getElementById('offWeekBtn').classList.remove('active');
+  document.getElementById('dayCardsWrap').style.opacity='1';
+  document.getElementById('dayCardsWrap').style.pointerEvents='';
+  WD.forEach((_,di)=>{dayState[di]={on:false,startSi:8,endSi:19};const card=document.getElementById(`dc_${di}`);const tog=document.getElementById(`tog_${di}`);if(card){card.classList.remove('on');card.classList.remove('off');}if(tog)tog.classList.remove('on');updateRangeDisplay(di);});
+  pendingVacs=[];renderVacList();
+  document.getElementById('empComment').value='';
+}
+function switchTab(t,btn){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(t).classList.add('active');btn.classList.add('active');
+  if(t==='owner')renderDashboard();
+  if(t==='archive')renderArchive();
+}
+
+// ── Owner edit ──
+let editingIdx=null,editDayState=[];
+function openEdit(idx){
+  editingIdx=idx;const data=getStorage();const e=data[idx];
+  document.getElementById('editModalTitle').textContent=`Editing: ${e.name}`;
+  editDayState=WD.map((_,di)=>{
+    const slots=e.avail.filter(a=>a.startsWith(di+'_')).map(a=>parseInt(a.split('_')[1]));
+    const on=slots.length>0;
+    return{on,startSi:on?Math.min(...slots):8,endSi:on?Math.max(...slots):19};
+  });
+  document.getElementById('editDayList').innerHTML=editDayState.map((ds,di)=>`
+    <div class="edit-day-row">
+      <div><div style="font-size:13px;color:var(--kona-white);font-weight:500">${DAY_FULL[di]} <span style="font-size:11px;color:var(--kona-text-muted)">${fmtDate(WD[di])}</span></div>
+      <div style="font-size:12px;color:var(--kona-text-muted)" id="ets_${di}">${ds.on?fmtSlot(ds.startSi)+' – '+fmtBlockEnd(ds.endSi):'Not available'}</div></div>
+      <div class="edit-toggle ${ds.on?'on':''}" id="etog_${di}" onclick="toggleEditDay(${di})"><div class="edit-toggle-knob"></div></div>
+    </div>`).join('');
+  document.getElementById('editModal').classList.add('open');
+}
+function toggleEditDay(di){
+  editDayState[di].on=!editDayState[di].on;
+  document.getElementById(`etog_${di}`).classList.toggle('on',editDayState[di].on);
+  document.getElementById(`ets_${di}`).textContent=editDayState[di].on?fmtSlot(editDayState[di].startSi)+' – '+fmtBlockEnd(editDayState[di].endSi):'Not available';
+}
+function editMarkOffWeek(){
+  const data=getStorage();data[editingIdx].offWeek=true;data[editingIdx].avail=[];setStorage(data);closeEdit();renderDashboard();
+}
+function editClearSubmission(){
+  if(!confirm('Remove this submission? They\'ll be able to resubmit.'))return;
+  const data=getStorage();data.splice(editingIdx,1);setStorage(data);closeEdit();renderDashboard();
+}
+function saveEdit(){
+  const data=getStorage();const avail=[];
+  editDayState.forEach((ds,di)=>{if(ds.on){for(let si=ds.startSi;si<=ds.endSi;si++)avail.push(`${di}_${si}`);}});
+  data[editingIdx].avail=avail;data[editingIdx].offWeek=avail.length===0&&editDayState.every(d=>!d.on);
+  setStorage(data);closeEdit();renderDashboard();
+}
+function closeEdit(){document.getElementById('editModal').classList.remove('open');}
+
+// ── Dashboard ──
+function getBlocks(emp,di){const blocks=[];let inBlock=false,start=0;SLOTS.forEach((_,si)=>{const has=emp.avail.includes(`${di}_${si}`);if(has&&!inBlock){inBlock=true;start=si;}if(!has&&inBlock){blocks.push({startSi:start,endSi:si-1});inBlock=false;}});if(inBlock)blocks.push({startSi:start,endSi:SLOTS.length-1});return blocks;}
+function blockContaining(emp,di,si){return getBlocks(emp,di).find(b=>si>=b.startSi&&si<=b.endSi)||null;}
+function buildDayTabs(){
+  const data=getStorage();
+  document.getElementById('dayTabs').innerHTML=WD.map((d,i)=>{
+    const count=new Set(data.filter(e=>!e.offWeek&&e.avail.some(a=>a.startsWith(i+'_'))).map(e=>e.name)).size;
+    return`<button class="day-tab ${i===selectedDay?'active':''}" onclick="selectDay(${i})">${DAYS[i]} ${fmtDate(d)}<span style="margin-left:5px;font-size:11px;opacity:0.8">${count>0?count+'p':''}</span></button>`;
+  }).join('');
+}
+function selectDay(di){selectedDay=di;selectedCell=null;document.querySelectorAll('.day-tab').forEach((b,i)=>b.classList.toggle('active',i===di));renderGrid();showEmptyDetail();}
+function renderGrid(){
+  const data=getStorage();
+  document.getElementById('gridTitle').textContent=`${DAYS[selectedDay]}, ${fmtDate(WD[selectedDay])}`;
+  const t=document.getElementById('dashTable');
+  let html='<thead><tr><th class="tc">Time</th>';
+  if(data.length){
+    data.forEach((e,ei)=>{const col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();html+=`<th style="min-width:28px"><div style="width:24px;height:24px;border-radius:50%;background:${e.offWeek?'rgba(232,75,75,0.2)':col.bg};color:${e.offWeek?'var(--kona-red)':col.fg};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;margin:0 auto" title="${e.name}">${init}</div></th>`;});
+    html+='<th style="min-width:32px;color:var(--kona-text-muted)">All</th>';
+  }
+  html+='</tr></thead><tbody>';
+  SLOTS.forEach((s,si)=>{
+    if(s.m!==0)return;
+    const key=`${selectedDay}_${si}`;
+    const avail=data.filter(e=>!e.offWeek&&e.avail.includes(key));
+    const count=avail.length;
+    const total=Math.max(data.filter(e=>!e.offWeek).length,1);
+    const op=count===0?0:0.15+0.8*(count/total);
+    const bg=count>0?`rgba(0,180,216,${op})`:'transparent';
+    const border=count===0?'1px solid rgba(0,180,216,0.12)':'none';
+    const isSel=selectedCell===key;
+    html+=`<tr><td class="tc">${s.label}</td>`;
+    if(data.length){
+      data.forEach((e,ei)=>{const col=AVATAR_COLORS[ei%7];const isOff=e.offWeek;const a=!isOff&&e.avail.includes(key);html+=`<td style="padding:2px"><div style="width:24px;height:18px;border-radius:3px;margin:0 auto;background:${isOff?'rgba(232,75,75,0.1)':a?col.bg:'transparent'};border:${isOff?'1px solid rgba(232,75,75,0.2)':a?'none':'1px solid rgba(0,180,216,0.1)'}"></div></td>`;});
+      html+=`<td style="padding:2px"><div class="dcell${isSel?' selected':''}" data-key="${key}" data-si="${si}" style="background:${bg};border:${border};color:${count>0?'#003d4d':'transparent'}">${count>0?count:''}</div></td>`;
+    }
+    html+='</tr>';
+  });
+  html+='</tbody>';t.innerHTML=html;
+  document.querySelectorAll('.dcell').forEach(cell=>{cell.addEventListener('click',()=>{document.querySelectorAll('.dcell').forEach(c=>c.classList.remove('selected'));cell.classList.add('selected');selectedCell=cell.dataset.key;showDetail(parseInt(cell.dataset.si));});});
+}
+function showEmptyDetail(){document.getElementById('detailPanel').innerHTML=`<div class="empty-detail"><div style="font-size:26px;margin-bottom:8px">👆</div><div>Click a cell to see<br>who's available and<br>their full shift window</div></div>`;}
+function showDetail(si){
+  const data=getStorage(),di=selectedDay,key=`${di}_${si}`;
+  const avail=data.filter(e=>!e.offWeek&&e.avail.includes(key));
+  const offAll=data.filter(e=>e.offWeek);
+  const unavail=data.filter(e=>!e.offWeek&&!e.avail.includes(key));
+  let html=`<div style="font-size:13px;font-weight:500;color:var(--kona-white);margin-bottom:2px">At ${SLOTS[si].label}</div><div style="font-size:11px;color:var(--kona-text-muted);margin-bottom:10px">${DAYS[di]}, ${fmtDate(WD[di])} · ${avail.length} available</div>`;
+  if(avail.length){html+=`<div class="sec-label">Available — full shift</div>`;avail.forEach(e=>{const ei=data.indexOf(e),col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();const block=blockContaining(e,di,si);const bs=block?(slotMinutes(block.startSi)-DAY_START_MIN)/DAY_SPAN*100:0;const be=block?((slotMinutes(block.endSi)+30)-DAY_START_MIN)/DAY_SPAN*100:0;html+=`<div class="person-row"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${col.bg};color:${col.fg}">${init}</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:500;color:var(--kona-white);margin-bottom:3px">${e.name}</div><div class="avail-bar-wrap"><div class="avail-bar" style="left:${bs.toFixed(1)}%;width:${Math.max(be-bs,3).toFixed(1)}%;background:${col.bg};border:1.5px solid ${col.fg}"></div></div><div style="display:flex;justify-content:space-between;margin-top:2px"><span style="font-size:10px;color:var(--kona-text-muted)">${block?fmtSlot(block.startSi):'—'}</span><span style="font-size:10px;color:var(--kona-text-muted)">${block?fmtBlockEnd(block.endSi):'—'}</span></div></div></div>`;});}
+  if(offAll.length){html+=`<div class="sec-label" style="margin-top:10px">Off all week</div>`;offAll.forEach(e=>{const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();html+=`<div class="person-row" style="opacity:0.55"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:rgba(232,75,75,0.2);color:var(--kona-red)">${init}</div><div><div style="font-size:12px;font-weight:500;color:var(--kona-white)">${e.name}</div><div style="font-size:10px;color:var(--kona-red);margin-top:1px">Off all week</div></div></div>`;});}
+  if(unavail.length){html+=`<div class="sec-label" style="margin-top:10px">Not available</div>`;unavail.forEach(e=>{const ei=data.indexOf(e),col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();const blocks=getBlocks(e,di);html+=`<div class="person-row" style="opacity:0.4"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${col.bg};color:${col.fg}">${init}</div><div><div style="font-size:12px;font-weight:500;color:var(--kona-white)">${e.name}</div><div style="font-size:10px;color:var(--kona-text-muted);margin-top:1px">${blocks.length?'Avail: '+blocks.map(b=>`${fmtSlot(b.startSi)}–${fmtBlockEnd(b.endSi)}`).join(', '):'Not available today'}</div></div></div>`;});}
+  document.getElementById('detailPanel').innerHTML=html;
+}
+function renderOwnerComments(data){
+  const el=document.getElementById('ownerComments');
+  const wc=data.filter(e=>e.comment&&e.comment.trim());
+  if(!wc.length){el.innerHTML='<p class="no-data">No comments yet.</p>';return;}
+  el.innerHTML=wc.map(e=>{const ei=data.indexOf(e),col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();const ts=new Date(e.submitted).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});return`<div style="margin-bottom:12px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div class="avatar" style="width:26px;height:26px;font-size:10px;background:${col.bg};color:${col.fg}">${init}</div><div style="font-size:13px;font-weight:500;color:var(--kona-white)">${e.name}</div><div style="font-size:11px;color:var(--kona-text-muted);margin-left:auto">${ts}</div></div><div class="comment-bubble">${e.comment}</div></div>`;}).join('');
+}
+function renderOwnerVacations(data){
+  const el=document.getElementById('ownerVacList');
+  const all=[];data.forEach(e=>{if(e.vacations&&e.vacations.length)e.vacations.forEach(v=>all.push({...v,name:e.name,ei:data.indexOf(e)}));});
+  all.sort((a,b)=>a.from.localeCompare(b.from));
+  if(!all.length){el.innerHTML='<p class="no-data">No upcoming time off reported.</p>';return;}
+  el.innerHTML=all.map(v=>{const col=AVATAR_COLORS[v.ei%7];const init=v.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();return`<div class="vac-owner-row"><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${col.bg};color:${col.fg}">${init}</div><div><div style="font-weight:500;font-size:13px;color:var(--kona-white)">${v.name}</div><div style="font-size:12px;color:var(--kona-text-muted);margin-top:1px">${fmtDateFull(v.from)} – ${fmtDateFull(v.to)}${v.note?' · '+v.note:''}</div></div></div></div>`;}).join('');
+}
+function renderDashboard(){
+  const data=getStorage();
+  document.getElementById('statResponded').textContent=data.length;
+  document.getElementById('statSlots').textContent=data.reduce((s,e)=>s+e.avail.length,0);
+  const dc=WD.map((_,di)=>new Set(data.filter(e=>!e.offWeek&&e.avail.some(a=>a.startsWith(di+'_'))).map(e=>e.name)).size);
+  const mx=dc.indexOf(Math.max(...dc));
+  document.getElementById('statPeak').textContent=data.length?DAYS[mx]:'—';
+  buildDayTabs();renderGrid();renderOwnerComments(data);renderOwnerVacations(data);
+  const empDiv=document.getElementById('empList');
+  if(!data.length){empDiv.innerHTML='<p class="no-data">No responses yet. Load demo data or have employees submit.</p>';return;}
+  empDiv.innerHTML=data.map((e,ei)=>{
+    const col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+    const ts=new Date(e.submitted).toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+    const days=e.offWeek?[]:WD.map((_,i)=>e.avail.some(a=>a.startsWith(i+'_'))?DAYS[i]:null).filter(Boolean);
+    return`<div class="emp-row">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <div class="avatar" style="width:36px;height:36px;font-size:12px;background:${e.offWeek?'rgba(232,75,75,0.2)':col.bg};color:${e.offWeek?'var(--kona-red)':col.fg}">${init}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:500;font-size:14px;color:var(--kona-white)">${e.name}</div>
+          <div style="font-size:12px;color:var(--kona-text-muted)">Submitted ${ts}${e.phone?' · '+e.phone:''}</div>
+          <div style="font-size:11px;margin-top:2px;color:${e.offWeek?'var(--kona-red)':'var(--kona-text-muted)'};">${e.offWeek?'Unavailable all week':'Days: '+days.join(', ')}${e.vacations&&e.vacations.length?' · '+e.vacations.length+' trip(s)':''}${e.comment?' · Note left':''}</div>
+        </div>
+        <span class="badge ${e.offWeek?'badge-off':''}">${e.offWeek?'Off all week':e.avail.length+' slots'}</span>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn amber-sm" onclick="openEdit(${ei})">Edit availability</button>
+        <button class="btn danger-sm" onclick="quickRemove(${ei})">Remove</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function quickRemove(idx){
+  const data=getStorage();
+  if(!confirm(`Remove ${data[idx].name}'s submission? They'll be able to resubmit.`))return;
+  data.splice(idx,1);setStorage(data);renderDashboard();
+}
+function clearCurrent(){if(confirm('Clear all current responses?')){setStorage([]);selectedCell=null;renderDashboard();}}
+
+// ── Archive ──
+function renderArchive(){
+  const archive=getArchive();
+  const el=document.getElementById('archiveContent');
+  if(!archive.length){el.innerHTML='<p class="no-data">No archived weeks yet. When you tap "Start new week", the current week\'s responses will be saved here automatically.</p>';return;}
+  el.innerHTML=archive.map((week,wi)=>{
+    const responses=week.responses||[];
+    const archivedAt=new Date(week.archivedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+    const empRows=responses.map((e,ei)=>{
+      const col=AVATAR_COLORS[ei%7];
+      const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+      const wd=getWeekDates(new Date(week.weekStart));
+      const days=e.offWeek?[]:wd.map((_,i)=>e.avail.some(a=>a.startsWith(i+'_'))?DAYS[i]:null).filter(Boolean);
+      return`<div class="archive-emp-row">
+        <div class="avatar" style="width:32px;height:32px;font-size:11px;background:${e.offWeek?'rgba(232,75,75,0.2)':col.bg};color:${e.offWeek?'var(--kona-red)':col.fg}">${init}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500;color:var(--kona-white)">${e.name}</div>
+          <div style="font-size:11px;color:var(--kona-text-muted);margin-top:1px">${e.offWeek?'Unavailable all week':'Days: '+days.join(', ')}${e.comment?'<br><em style="color:var(--kona-text-muted)">Note: '+e.comment+'</em>':''}</div>
+        </div>
+        <span class="badge ${e.offWeek?'badge-off':''}" style="flex-shrink:0">${e.offWeek?'Off':e.avail.length+' slots'}</span>
+      </div>`;
+    }).join('');
+    return`<div class="archive-week" id="aw_${wi}">
+      <div class="archive-week-header" onclick="toggleArchiveWeek(${wi})">
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--kona-white)">${week.weekLabel}</div>
+          <div style="font-size:12px;color:var(--kona-text-muted);margin-top:2px">${responses.length} response${responses.length!==1?'s':''} · Archived ${archivedAt}</div>
+        </div>
+        <div style="color:var(--kona-text-muted);font-size:18px" id="aw_arrow_${wi}">›</div>
+      </div>
+      <div class="archive-week-body">${empRows||'<p class="no-data" style="padding:8px 0">No responses were recorded this week.</p>'}</div>
+    </div>`;
+  }).join('');
+}
+function toggleArchiveWeek(wi){
+  const el=document.getElementById(`aw_${wi}`);
+  const arrow=document.getElementById(`aw_arrow_${wi}`);
+  const open=el.classList.toggle('open');
+  arrow.style.transform=open?'rotate(90deg)':'';
+}
+
+// ── Demo ──
+const DEMO=[
+  {name:'Alex Johnson',phone:'206-555-0101',offWeek:false,vacations:[{from:'2025-07-14',to:'2025-07-20',note:'Family vacation'}],comment:"Doctor appointment Wed morning — can't start until noon."},
+  {name:'Maya Patel',phone:'206-555-0102',offWeek:false,vacations:[],comment:''},
+  {name:'Jordan Lee',phone:'206-555-0103',offWeek:true,vacations:[{from:'2025-08-04',to:'2025-08-10',note:'Soccer camp'}],comment:'Back Aug 11 and totally free that week!'},
+  {name:'Sam Rivera',phone:'206-555-0104',offWeek:false,vacations:[],comment:''},
+  {name:'Casey Kim',phone:'206-555-0105',offWeek:false,vacations:[{from:'2025-07-28',to:'2025-08-01',note:'Beach trip'}],comment:'Prefer not to work past 9pm on school nights.'},
+  {name:'Taylor Brooks',phone:'206-555-0106',offWeek:false,vacations:[],comment:''},
+  {name:'Morgan Chen',phone:'206-555-0107',offWeek:false,vacations:[],comment:'Can pick up extra shifts if anyone calls out — just text me!'},
+];
+function randAvail(pats){const a=[];pats.forEach(([di,sh,eh])=>{const s=SLOTS.findIndex(x=>x.h===sh&&x.m===0);const e=Math.min(SLOTS.findIndex(x=>x.h===eh&&x.m===0)-1,TOTAL_SLOTS-1);for(let i=Math.max(0,s);i<=Math.max(0,e);i++)if(Math.random()>0.05)a.push(`${di}_${i}`);});return a;}
+function loadDemo(){
+  const pats=[[[0,10,15],[1,10,15],[2,14,21],[4,10,18],[5,9,18],[6,14,23]],[[0,14,23],[1,14,23],[3,9,17],[5,9,14],[6,9,17]],[],[[0,9,23],[2,9,23],[4,9,23],[6,9,23]],[[1,11,19],[2,11,19],[3,11,19],[5,14,23],[6,14,23]],[[0,16,23],[1,16,23],[3,9,16],[4,9,16],[5,9,16]],[[2,9,17],[3,9,17],[4,14,23],[5,9,23],[6,9,23]]];
+  const data=DEMO.map((e,i)=>{const sub=new Date();sub.setHours(sub.getHours()-Math.floor(Math.random()*18));return{...e,avail:e.offWeek?[]:randAvail(pats[i]),submitted:sub.toISOString()};});
+  setStorage(data);selectedCell=null;renderDashboard();
+}
+
+// ── Init ──
+// Add weekRangeEmpSpan to employee form title dynamically
+document.querySelector('#employee .card .card-title').innerHTML=
+  `Your info`;
+// Insert week range into availability card
+const availCard=document.querySelector('#dayCardsWrap');
+
+updateWeekLabels();
+buildDayCards();
+renderDashboard();
+
+// Patch: add span to employee section heading
+setTimeout(()=>{
+  const cards=document.querySelectorAll('#employee .card');
+  if(cards[1]){
+    const t=cards[1].querySelector('.card-title');
+    if(t&&!document.getElementById('weekRangeEmpSpan')){
+      t.innerHTML='When can you work? <span id="weekRangeEmpSpan" style="font-size:13px;font-weight:400;color:var(--kona-text-muted)"></span>';
+      document.getElementById('weekRangeEmpSpan').textContent=`— ${fmtDate(WD[0])} to ${fmtDate(WD[6])}`;
+    }
+  }
+},50);
+</script>
