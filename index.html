@@ -285,7 +285,7 @@ table.dash td.tc{text-align:left;padding-left:4px;font-size:11px;color:var(--mut
 
 <script>
 // ── Owner password ──
-const OWNER_PASSWORD = 'konaice2025';
+const OWNER_PASSWORD = '1248';
 let ownerUnlocked = false;
 
 function tryOwnerLogin(){
@@ -375,7 +375,7 @@ let CURRENT_MONDAY = getNextMonday();
 let WD = getWeekDates(CURRENT_MONDAY);
 let currentData = [];
 let selectedDay=0, selectedCell=null, offWeek=false, pendingVacs=[];
-const dayState = WD.map(()=>({on:false,startSi:8,endSi:19}));
+const dayState = WD.map(()=>({on:true,startSi:8,endSi:19}));
 
 // ── Supabase helpers ──
 async function loadCurrentWeek(){
@@ -494,20 +494,19 @@ async function checkLocked(){
 function buildDayCards(){
   const wrap=document.getElementById('dayCardsWrap');
   wrap.innerHTML=WD.map((d,di)=>`
-    <div class="day-card" id="dc_${di}">
-      <div class="day-card-header" onclick="toggleDay(${di})">
+    <div class="day-card on" id="dc_${di}">
+      <div class="day-card-header" style="cursor:default">
         <div><div class="day-name-big">${DAY_FULL[di]}</div><div class="day-date-small">${fmtDate(d)}</div></div>
-        <div class="toggle" id="tog_${di}"><div class="toggle-knob"></div></div>
       </div>
       <div class="day-body" id="db_${di}">
         <div class="shift-pills">
-          <div class="shift-pill" onclick="setShift(${di},9,13)">Morning</div>
-          <div class="shift-pill" onclick="setShift(${di},13,18)">Afternoon</div>
-          <div class="shift-pill" onclick="setShift(${di},18,23)">Evening</div>
+          <div class="shift-pill" onclick="setShift(${di},9,13)">Morning (9–1)</div>
+          <div class="shift-pill" onclick="setShift(${di},13,18)">Afternoon (1–6)</div>
+          <div class="shift-pill" onclick="setShift(${di},18,23)">Evening (6–11)</div>
           <div class="shift-pill" onclick="setShift(${di},9,23)">All day</div>
           <button class="unavail-day-btn" id="unavailBtn_${di}" onclick="toggleUnavailDay(${di})">Unavailable all day</button>
         </div>
-        <div class="range-time-labels"><span>9 AM</span><span>1 PM</span><span>5 PM</span><span>9 PM</span><span>11 PM</span></div>
+        <div class="range-time-labels"><span>9am</span><span>10</span><span>11</span><span>12pm</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11pm</span></div>
         <div class="range-wrap"><div class="range-track" id="rt_${di}">
           <div class="range-fill" id="rf_${di}"></div>
           <div class="range-handle" id="rhl_${di}"></div>
@@ -520,7 +519,7 @@ function buildDayCards(){
 }
 
 function rebuildDayCards(){
-  for(let i=0;i<7;i++)dayState[i]={on:false,startSi:8,endSi:19};
+  for(let i=0;i<7;i++)dayState[i]={on:true,startSi:8,endSi:19};
   buildDayCards();
 }
 
@@ -628,7 +627,17 @@ function resetForm(){
   document.getElementById('offWeekBtn').classList.remove('active');
   document.getElementById('dayCardsWrap').style.opacity='1';
   document.getElementById('dayCardsWrap').style.pointerEvents='';
-  WD.forEach((_,di)=>{dayState[di]={on:false,startSi:8,endSi:19};const c=document.getElementById(`dc_${di}`);const t=document.getElementById(`tog_${di}`);if(c){c.classList.remove('on');c.classList.remove('off');}if(t)t.classList.remove('on');updateRangeDisplay(di);});
+  WD.forEach((_,di)=>{
+    dayState[di]={on:true,startSi:8,endSi:19};
+    dayUnavail[di]=false;
+    const c=document.getElementById(`dc_${di}`);
+    if(c){c.classList.add('on');c.classList.remove('off');}
+    const unavailBtn=document.getElementById(`unavailBtn_${di}`);
+    if(unavailBtn){unavailBtn.textContent='Unavailable all day';unavailBtn.classList.remove('active');}
+    const db=document.getElementById(`db_${di}`);
+    if(db)db.querySelectorAll('.shift-pill,.range-time-labels,.range-wrap,.range-selected').forEach(el=>el.style.display='');
+    updateRangeDisplay(di);
+  });
   pendingVacs=[];renderVacList();
   document.getElementById('empComment').value='';
 }
@@ -660,18 +669,35 @@ function openEdit(id){
     const on=slots.length>0;
     return{on,startSi:on?Math.min(...slots):8,endSi:on?Math.max(...slots):19};
   });
+
+  // Build slot options for dropdowns
+  const slotOptions=SLOTS.map((s,si)=>`<option value="${si}">${s.label}</option>`).join('');
+
   document.getElementById('editDayList').innerHTML=editDayState.map((ds,di)=>`
-    <div class="edit-day-row">
-      <div><div style="font-size:13px;font-weight:500">${DAY_FULL[di]} <span style="font-size:11px;color:var(--muted)">${fmtDate(WD[di])}</span></div>
-      <div style="font-size:12px;color:var(--muted)" id="ets_${di}">${ds.on?fmtSlot(ds.startSi)+' – '+fmtBlockEnd(ds.endSi):'Not available'}</div></div>
-      <div class="edit-toggle ${ds.on?'on':''}" id="etog_${di}" onclick="toggleEditDay(${di})"><div class="edit-toggle-knob"></div></div>
+    <div class="edit-day-row" style="flex-wrap:wrap;gap:6px;padding:10px 0">
+      <div style="display:flex;align-items:center;gap:10px;width:100%">
+        <div class="edit-toggle ${ds.on?'on':''}" id="etog_${di}" onclick="toggleEditDay(${di})"><div class="edit-toggle-knob"></div></div>
+        <div style="font-size:13px;font-weight:600;color:var(--navy)">${DAY_FULL[di]}</div>
+        <div style="font-size:11px;color:var(--muted)">${fmtDate(WD[di])}</div>
+      </div>
+      <div id="editTimeRow_${di}" style="display:${ds.on?'flex':'none'};align-items:center;gap:8px;flex-wrap:wrap;padding-left:48px;width:100%">
+        <label style="margin:0;font-size:11px">From</label>
+        <select id="estart_${di}" onchange="editDayState[${di}].startSi=parseInt(this.value)" style="padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:#fff;color:var(--navy)">
+          ${SLOTS.map((s,si)=>`<option value="${si}" ${si===ds.startSi?'selected':''}>${s.label}</option>`).join('')}
+        </select>
+        <label style="margin:0;font-size:11px">To</label>
+        <select id="eend_${di}" onchange="editDayState[${di}].endSi=parseInt(this.value)" style="padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:#fff;color:var(--navy)">
+          ${SLOTS.map((s,si)=>`<option value="${si}" ${si===ds.endSi?'selected':''}>${fmtBlockEnd(si)}</option>`).join('')}
+        </select>
+      </div>
     </div>`).join('');
   document.getElementById('editModal').classList.add('open');
 }
+
 function toggleEditDay(di){
   editDayState[di].on=!editDayState[di].on;
   document.getElementById(`etog_${di}`).classList.toggle('on',editDayState[di].on);
-  document.getElementById(`ets_${di}`).textContent=editDayState[di].on?fmtSlot(editDayState[di].startSi)+' – '+fmtBlockEnd(editDayState[di].endSi):'Not available';
+  document.getElementById(`editTimeRow_${di}`).style.display=editDayState[di].on?'flex':'none';
 }
 async function editMarkOffWeek(){
   await updateResponse(editingId,{off_week:true,avail:[]});
