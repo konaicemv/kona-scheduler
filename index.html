@@ -9,39 +9,38 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;background:#ddeef5;min-height:100vh;padding:12px}
 :root{
-  --navy:#0a3d5c;--navy-mid:#ffffff;--card:#ffffff;
-  --cyan:#00b4d8;--cyan-light:#0096b7;
-  --muted:#4a7c95;--white:#ffffff;--text:#0a2e42;
+  --navy:#0a3d5c;--cyan:#00b4d8;--cyan-light:#0096b7;--cyan-dark:#006d8f;
+  --muted:#4a7c95;--text:#0a2e42;
   --red:#d63031;--red-light:#ffeaea;
   --green:#00916a;--green-light:#e6f9f3;
   --amber:#c96a00;--amber-light:#fff4e0;
-  --border:#b8dcea;--surface:#eaf5fb;
+  --border:#b8dcea;
 }
 .app{max-width:980px;margin:0 auto;color:var(--text)}
 .kona-header{background:var(--navy);border-bottom:3px solid var(--cyan);padding:12px 16px;display:flex;align-items:center;gap:12px;border-radius:12px 12px 0 0}
 .kona-logo{width:40px;height:40px;border-radius:50%;background:var(--cyan);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--navy);flex-shrink:0}
-.kona-title{font-size:17px;font-weight:600;color:#ffffff}
+.kona-title{font-size:17px;font-weight:600;color:#fff}
 .kona-sub{font-size:12px;color:rgba(255,255,255,0.7)}
 .tab-bar{display:flex;background:var(--navy);border-bottom:1px solid var(--border)}
 .tab{flex:1;padding:11px 6px;border:none;background:none;cursor:pointer;font-size:13px;color:rgba(255,255,255,0.6);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit}
-.tab:hover{color:#ffffff}
-.tab.active{color:#ffffff;border-bottom-color:var(--cyan);font-weight:500}
+.tab:hover{color:#fff}
+.tab.active{color:#fff;border-bottom-color:var(--cyan);font-weight:500}
 .content{background:#f0f8fc;padding:14px;border-radius:0 0 12px 12px}
 .section{display:none}.section.active{display:block}
-.card{background:#ffffff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,100,140,0.08)}
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,100,140,0.08)}
 .card-title{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px}
 .card-hint{font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5}
 label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.4px;font-weight:500}
-input[type=text],input[type=date],textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:#ffffff;color:var(--text);font-family:inherit}
-input:focus,textarea:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,180,216,0.12)}
+input[type=text],input[type=date],textarea,select{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:#fff;color:var(--text);font-family:inherit}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,180,216,0.12)}
 input::placeholder,textarea::placeholder{color:#9ab8c8}
 textarea{resize:vertical;min-height:70px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
 @media(max-width:500px){.form-row,.form-row-3{grid-template-columns:1fr}}
-.btn{padding:10px 18px;border-radius:8px;border:1px solid var(--border);background:#ffffff;color:var(--navy);cursor:pointer;font-size:14px;font-family:inherit;font-weight:500}
+.btn{padding:10px 18px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--navy);cursor:pointer;font-size:14px;font-family:inherit;font-weight:500}
 .btn:hover{border-color:var(--cyan);color:var(--cyan-light);background:#f0f8fc}
-.btn.primary{background:var(--cyan);color:#ffffff;border-color:var(--cyan);font-weight:700;font-size:16px;width:100%;padding:14px}
+.btn.primary{background:var(--cyan);color:#fff;border-color:var(--cyan);font-weight:700;font-size:16px;width:100%;padding:14px}
 .btn.primary:hover{background:var(--cyan-light)}
 .btn.sm{padding:6px 12px;font-size:12px}
 .btn.amber-sm{padding:6px 12px;font-size:12px;color:var(--amber);border-color:rgba(201,106,0,0.35);background:var(--amber-light)}
@@ -50,21 +49,15 @@ textarea{resize:vertical;min-height:70px}
 .locked-box{background:var(--amber-light);border:1px solid rgba(201,106,0,0.35);border-radius:8px;padding:14px;color:var(--amber);font-size:14px;margin-bottom:12px;line-height:1.6;display:none}
 .off-week-btn{width:100%;padding:12px;border:1px solid rgba(214,48,49,0.35);border-radius:8px;background:var(--red-light);color:var(--red);font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;margin-bottom:12px;text-align:center}
 .off-week-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
-.day-card{background:#ffffff;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,100,140,0.06)}
+.day-card{background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,100,140,0.06)}
 .day-card.off{opacity:0.6}
-.day-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer}
+.day-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px}
 .day-name-big{font-size:16px;font-weight:600;color:var(--navy)}
 .day-date-small{font-size:12px;color:var(--muted);margin-top:1px}
-.toggle{width:46px;height:26px;border-radius:13px;background:#c8dde6;position:relative;flex-shrink:0;cursor:pointer}
-.toggle.on{background:var(--cyan)}
-.toggle-knob{width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:left 0.15s;box-shadow:0 1px 3px rgba(0,0,0,0.15)}
-.toggle.on .toggle-knob{left:23px}
-.day-body{padding:0 14px 14px;display:none}
-.day-card.on .day-body{display:block}
+.day-body{padding:0 14px 14px;display:block}
 .shift-pills{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.shift-pill{padding:7px 12px;border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--muted);cursor:pointer;background:#f0f8fc;font-family:inherit;white-space:nowrap;font-weight:500}
-.shift-pill:hover{border-color:var(--cyan);color:var(--cyan)}
-.shift-pill.active{background:rgba(0,180,216,0.12);border-color:var(--cyan);color:var(--cyan);font-weight:600}
+.unavail-day-btn{padding:7px 12px;font-size:12px;border:1px solid rgba(214,48,49,0.35);border-radius:20px;background:var(--red-light);color:var(--red);cursor:pointer;font-family:inherit;white-space:nowrap;font-weight:500}
+.unavail-day-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
 .range-wrap{position:relative;padding:10px 0;margin-bottom:6px;user-select:none;touch-action:none}
 .range-track{height:6px;background:#c8dde6;border-radius:3px;position:relative}
 .range-fill{height:6px;background:var(--cyan);border-radius:3px;position:absolute;top:0}
@@ -75,26 +68,31 @@ textarea{resize:vertical;min-height:70px}
 .vac-remove{background:none;border:none;cursor:pointer;color:var(--muted);font-size:20px;line-height:1;padding:0 2px}
 .vac-remove:hover{color:var(--red)}
 .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
-.stat{background:var(--navy);border:none;border-radius:10px;padding:12px;text-align:center}
+.stat{background:var(--navy);border-radius:10px;padding:12px;text-align:center}
 .stat-num{font-size:22px;font-weight:700;color:var(--cyan)}
 .stat-lbl{font-size:11px;color:rgba(255,255,255,0.7);margin-top:2px}
 .day-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.day-tab{padding:6px 13px;border:1px solid var(--border);border-radius:20px;cursor:pointer;font-size:13px;background:#ffffff;color:var(--muted);font-family:inherit;white-space:nowrap;font-weight:500}
+.day-tab{padding:6px 13px;border:1px solid var(--border);border-radius:20px;cursor:pointer;font-size:13px;background:#fff;color:var(--muted);font-family:inherit;white-space:nowrap;font-weight:500}
 .day-tab:hover{border-color:var(--cyan);color:var(--cyan)}
-.day-tab.active{background:var(--cyan);color:#ffffff;border-color:var(--cyan);font-weight:600}
+.day-tab.active{background:var(--cyan);color:#fff;border-color:var(--cyan);font-weight:600}
+/* #5 - draggable columns */
 .dash-layout{display:grid;grid-template-columns:1fr 300px;gap:14px;align-items:start}
 @media(max-width:680px){.dash-layout{grid-template-columns:1fr}}
 table.dash{border-collapse:collapse;width:100%;font-size:12px}
-table.dash th{padding:5px 3px;text-align:center;font-weight:600;color:var(--navy);border-bottom:2px solid var(--border);white-space:nowrap}
-table.dash th.tc{text-align:left;padding-left:4px;min-width:54px}
+table.dash th{padding:5px 3px;text-align:center;font-weight:600;color:var(--navy);border-bottom:2px solid var(--border);white-space:nowrap;cursor:grab}
+table.dash th.tc{text-align:left;padding-left:4px;min-width:60px;cursor:default}
+table.dash th.dragging{opacity:0.4}
+table.dash th.drag-over{border-left:2px solid var(--cyan)}
 table.dash td{padding:2px 3px;text-align:center}
 table.dash td.tc{text-align:left;padding-left:4px;font-size:11px;color:var(--muted);white-space:nowrap}
-.dcell{width:26px;height:20px;border-radius:3px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;cursor:pointer}
+/* #5 - bolder avatar initials */
+.grid-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;margin:0 auto;color:#000;border:1.5px solid rgba(0,0,0,0.15)}
+.dcell{width:26px;height:14px;border-radius:2px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;cursor:pointer;color:#fff}
 .dcell:hover{outline:2px solid var(--cyan)}
 .dcell.selected{outline:2px solid var(--cyan);outline-offset:1px}
-.detail-panel{background:#ffffff;border:1px solid var(--border);border-radius:10px;padding:12px;position:sticky;top:1rem;box-shadow:0 1px 3px rgba(0,100,140,0.08)}
+.detail-panel{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;position:sticky;top:1rem;box-shadow:0 1px 3px rgba(0,100,140,0.08)}
 .empty-detail{text-align:center;padding:1.5rem 0;color:var(--muted);font-size:13px}
-.avatar{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0}
+.avatar{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
 .person-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)}
 .person-row:last-child{border-bottom:none}
 .sec-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin:8px 0 5px}
@@ -111,20 +109,14 @@ table.dash td.tc{text-align:left;padding-left:4px;font-size:11px;color:var(--mut
 .legend{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--muted);margin-bottom:8px;flex-wrap:wrap}
 .lswatch{width:16px;height:12px;border-radius:2px;display:inline-block;vertical-align:middle}
 .owner-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
-.modal-backdrop{background:rgba(0,40,80,0.5);border-radius:10px;padding:20px;margin-bottom:12px;display:none}
-.modal-backdrop.open{display:block}
-.modal-inner{background:#ffffff;border:2px solid var(--cyan);border-radius:12px;padding:16px}
-.modal-title{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
-.modal-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1}
-.edit-day-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
-.edit-day-row:last-child{border-bottom:none}
-.edit-toggle{width:38px;height:22px;border-radius:11px;background:#c8dde6;position:relative;flex-shrink:0;cursor:pointer}
-.edit-toggle.on{background:var(--cyan)}
-.edit-toggle-knob{width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:left 0.15s;box-shadow:0 1px 2px rgba(0,0,0,0.15)}
-.edit-toggle.on .edit-toggle-knob{left:19px}
+/* #4 - inline edit panel */
+.inline-edit{background:#f0f8fc;border:2px solid var(--cyan);border-radius:10px;padding:14px;margin-top:8px;display:none}
+.inline-edit.open{display:block}
+.modal-inner{background:#fff;border:2px solid var(--cyan);border-radius:12px;padding:16px}
 .newweek-confirm{background:#e6f6fb;border:1px solid rgba(0,180,216,0.4);border-radius:10px;padding:16px;margin-bottom:12px;display:none}
 .newweek-confirm.open{display:block}
-.archive-week{background:#ffffff;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,100,140,0.06)}
+/* archive grid */
+.archive-week{background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,100,140,0.06)}
 .archive-week-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer}
 .archive-week-header:hover{background:#f0f8fc}
 .archive-week-body{display:none;padding:0 14px 14px}
@@ -138,8 +130,10 @@ table.dash td.tc{text-align:left;padding-left:4px;font-size:11px;color:var(--mut
 .owner-lock input{max-width:260px;margin:0 auto 12px;display:block;text-align:center;font-size:16px;letter-spacing:2px}
 .tab.owner-tab{display:none}
 .tab.owner-tab.visible{display:block}
-.unavail-day-btn{padding:6px 12px;font-size:12px;border:1px solid rgba(214,48,49,0.35);border-radius:6px;background:var(--red-light);color:var(--red);cursor:pointer;font-family:inherit;white-space:nowrap;font-weight:500}
-.unavail-day-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
+.edit-toggle{width:38px;height:22px;border-radius:11px;background:#c8dde6;position:relative;flex-shrink:0;cursor:pointer}
+.edit-toggle.on{background:var(--cyan)}
+.edit-toggle-knob{width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:left 0.15s;box-shadow:0 1px 2px rgba(0,0,0,0.15)}
+.edit-toggle.on .edit-toggle-knob{left:19px}
 </style>
 </head>
 <body>
@@ -210,7 +204,7 @@ table.dash td.tc{text-align:left;padding-left:4px;font-size:11px;color:var(--mut
       <div class="owner-header">
         <div style="font-size:15px;font-weight:500">Week of <span id="weekOf" style="color:var(--cyan)"></span></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn sm" style="background:var(--cyan);color:var(--navy);border-color:var(--cyan);font-weight:600" onclick="showNewWeekConfirm()">Start new week</button>
+          <button class="btn sm" style="background:var(--cyan);color:#fff;border-color:var(--cyan);font-weight:600" onclick="showNewWeekConfirm()">Start new week</button>
           <button class="btn sm" onclick="clearCurrent()">Clear all</button>
           <button class="btn sm" onclick="ownerLogout()" style="color:var(--muted)">Log out</button>
         </div>
@@ -219,7 +213,7 @@ table.dash td.tc{text-align:left;padding-left:4px;font-size:11px;color:var(--mut
         <div style="font-size:14px;font-weight:500;color:var(--cyan);margin-bottom:6px">Start new week?</div>
         <div style="font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.6">This will archive this week's <strong id="nwCount" style="color:var(--navy)">0</strong> submissions and open a fresh week. You can view archived weeks in the Archive tab anytime.</div>
         <div style="display:flex;gap:8px">
-          <button class="btn sm" style="background:var(--cyan);color:var(--navy);border-color:var(--cyan);font-weight:600" onclick="confirmNewWeek()">Yes, archive and start fresh</button>
+          <button class="btn sm" style="background:var(--cyan);color:#fff;border-color:var(--cyan);font-weight:600" onclick="confirmNewWeek()">Yes, archive and start fresh</button>
           <button class="btn sm" onclick="hideNewWeekConfirm()">Cancel</button>
         </div>
       </div>
@@ -237,36 +231,15 @@ table.dash td.tc{text-align:left;padding-left:4px;font-size:11px;color:var(--mut
           <div style="font-size:14px;font-weight:500;margin-bottom:4px" id="gridTitle">Availability grid</div>
           <div class="legend">
             <span>People available:</span>
-            <span><span class="lswatch" style="background:rgba(0,180,216,0.15);border:1px solid rgba(0,180,216,0.2)"></span>1</span>
-            <span><span class="lswatch" style="background:rgba(0,180,216,0.5)"></span>3–4</span>
+            <span><span class="lswatch" style="background:rgba(0,180,216,0.2);border:1px solid rgba(0,180,216,0.3)"></span>1–2</span>
+            <span><span class="lswatch" style="background:rgba(0,180,216,0.55)"></span>3–4</span>
             <span><span class="lswatch" style="background:rgba(0,180,216,0.9)"></span>6–7</span>
           </div>
-          <div class="card-hint">Click a cell to see everyone's full shift window.</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px">Click a cell to see full shift windows. Drag column headers to reorder employees.</div>
           <div style="overflow-x:auto"><table class="dash" id="dashTable"></table></div>
         </div>
         <div class="detail-panel" id="detailPanel">
           <div class="empty-detail"><div style="font-size:26px;margin-bottom:8px">👆</div><div>Click a cell to see<br>who's available and<br>their full shift window</div></div>
-        </div>
-      </div>
-      <div class="modal-backdrop" id="editModal">
-        <div class="modal-inner">
-          <div class="modal-title">
-            <span id="editModalTitle">Edit availability</span>
-            <button class="modal-close" onclick="closeEdit()">×</button>
-          </div>
-          <div style="margin-bottom:12px">
-            <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Quick actions</div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <button class="btn sm" onclick="editMarkOffWeek()" style="color:var(--red);border-color:rgba(232,75,75,0.35);background:var(--red-light)">Mark off all week</button>
-              <button class="btn sm" onclick="editClearSubmission()">Remove submission</button>
-            </div>
-          </div>
-          <div style="font-size:12px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.4px">Toggle days on/off</div>
-          <div id="editDayList"></div>
-          <div style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end">
-            <button class="btn sm" onclick="closeEdit()">Cancel</button>
-            <button class="btn sm" onclick="saveEdit()" style="background:var(--cyan);color:var(--navy);border-color:var(--cyan);font-weight:600">Save changes</button>
-          </div>
         </div>
       </div>
       <div class="card"><div class="card-title" style="margin-bottom:4px">Staff notes</div><div id="ownerComments"><p class="no-data">No comments yet.</p></div></div>
@@ -284,33 +257,22 @@ table.dash td.tc{text-align:left;padding-left:4px;font-size:11px;color:var(--mut
 </div>
 
 <script>
-// ── Owner password ──
-const OWNER_PASSWORD = '1248';
-let ownerUnlocked = false;
+const OWNER_PASSWORD='1248';
+let ownerUnlocked=false;
 
 function tryOwnerLogin(){
-  const pw = document.getElementById('ownerPwInput').value;
-  if(pw === OWNER_PASSWORD){
-    ownerUnlocked = true;
+  const pw=document.getElementById('ownerPwInput').value;
+  if(pw===OWNER_PASSWORD){
+    ownerUnlocked=true;
     document.getElementById('ownerPwInput').value='';
     document.getElementById('ownerPwError').style.display='none';
-    showOwnerTabs();
-    switchTab('owner', document.getElementById('tabOwner'));
+    document.querySelectorAll('.owner-tab').forEach(t=>t.classList.add('visible'));
+    document.getElementById('tabOwnerLogin').style.display='none';
+    switchTab('owner',document.getElementById('tabOwner'));
   } else {
     document.getElementById('ownerPwError').style.display='block';
   }
 }
-
-function showOwnerTabs(){
-  document.querySelectorAll('.owner-tab').forEach(t=>t.classList.add('visible'));
-  document.getElementById('tabOwnerLogin').style.display='none';
-}
-
-function checkOwnerSession(){
-  // No session persistence — always require password
-  ownerUnlocked=false;
-}
-
 function ownerLogout(){
   ownerUnlocked=false;
   document.querySelectorAll('.owner-tab').forEach(t=>t.classList.remove('visible'));
@@ -318,42 +280,23 @@ function ownerLogout(){
   switchTab('employee',document.getElementById('tabEmployee'));
 }
 
-// ── Unavailable all day toggle ──
-const dayUnavail={};
-function toggleUnavailDay(di){
-  dayUnavail[di]=!dayUnavail[di];
-  const btn=document.getElementById(`unavailBtn_${di}`);
-  const wrap=document.getElementById(`db_${di}`);
-  if(dayUnavail[di]){
-    btn.textContent='Undo — I am available this day';
-    btn.classList.add('active');
-    wrap.querySelectorAll('.range-time-labels,.range-wrap,.range-selected').forEach(el=>el.style.display='none');
-    wrap.querySelectorAll('div[style*="Use the sliders"]').forEach(el=>el.style.display='none');
-  } else {
-    btn.textContent='Unavailable all day';
-    btn.classList.remove('active');
-    wrap.querySelectorAll('.range-time-labels,.range-wrap,.range-selected').forEach(el=>el.style.display='');
-    wrap.querySelectorAll('div[style*="Use the sliders"]').forEach(el=>el.style.display='');
-  }
-}
-
-
-const SUPABASE_URL = 'https://ttptwcblzvuvtiuznccm.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_I_HL9R6wLY3wpsaYSV4xKw_G3w8i7mO';
-const { createClient } = supabase;
-const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_URL='https://ttptwcblzvuvtiuznccm.supabase.co';
+const SUPABASE_KEY='sb_publishable_I_HL9R6wLY3wpsaYSV4xKw_G3w8i7mO';
+const {createClient}=supabase;
+const db=createClient(SUPABASE_URL,SUPABASE_KEY);
 
 const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const DAY_FULL=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const AVATAR_COLORS=[
-  {bg:'rgba(0,180,216,0.2)',fg:'#90e0ef'},{bg:'rgba(0,196,140,0.2)',fg:'#00c48c'},
-  {bg:'rgba(255,180,0,0.2)',fg:'#ffd166'},{bg:'rgba(200,100,220,0.2)',fg:'#d4a0e8'},
-  {bg:'rgba(255,120,80,0.2)',fg:'#ffaa88'},{bg:'rgba(80,180,255,0.2)',fg:'#80c8ff'},
-  {bg:'rgba(255,200,80,0.2)',fg:'#ffe066'}
+  {bg:'#b3e5f5',fg:'#00688a'},{bg:'#b3ead9',fg:'#006644'},
+  {bg:'#fde9b3',fg:'#7a4f00'},{bg:'#e8ccf5',fg:'#5a2080'},
+  {bg:'#ffd0c0',fg:'#8a2000'},{bg:'#c0dcff',fg:'#003080'},
+  {bg:'#ffe8b3',fg:'#7a5000'}
 ];
 
 function getNextMonday(from){const n=from||new Date(),d=n.getDay(),m=new Date(n);m.setDate(n.getDate()+(d===0?1:8-d));m.setHours(0,0,0,0);return m;}
-function getWeekDates(mon){const m=mon||CURRENT_MONDAY;return DAYS.map((_,i)=>{const d=new Date(m);d.setDate(m.getDate()+i);return d;});}
+function addDays(date,n){const d=new Date(date);d.setDate(d.getDate()+n);return d;}
+function getWeekDates(mon){return DAYS.map((_,i)=>addDays(mon,i));}
 function fmtDate(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
 function fmtDateFull(s){if(!s)return'';const d=new Date(s+'T12:00:00');return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
 function fmtWeekRange(mon){const wd=getWeekDates(new Date(mon));return`${fmtDate(wd[0])} – ${fmtDate(wd[6])}`;}
@@ -367,107 +310,79 @@ function slotMinutes(si){return SLOTS[si].h*60+SLOTS[si].m;}
 function fmtSlot(si){if(si<0||si>=TOTAL_SLOTS)return'—';const s=SLOTS[si],h12=s.h>12?s.h-12:s.h===0?12:s.h,ap=s.h<12?'AM':'PM';return`${h12}:${s.m===0?'00':'30'} ${ap}`;}
 function fmtBlockEnd(si){return si+1>=TOTAL_SLOTS?'11:00 PM':fmtSlot(si+1);}
 
-// Week state
-let CURRENT_MONDAY = getNextMonday();
-let WD = getWeekDates(CURRENT_MONDAY);
-let currentData = [];
-let selectedDay=0, selectedCell=null, offWeek=false, pendingVacs=[];
-const dayState = WD.map(()=>({on:true,startSi:8,endSi:19}));
-
-// ── Supabase helpers ──
-async function loadCurrentWeek(){
-  const weekStart = toDateStr(CURRENT_MONDAY);
-  const {data,error} = await db.from('responses').select('*').eq('week_start',weekStart);
-  if(error){console.error(error);return[];}
-  return data||[];
-}
-
-async function saveResponse(entry){
-  const weekStart = toDateStr(CURRENT_MONDAY);
-  const {error} = await db.from('responses').insert({
-    name: entry.name,
-    phone: entry.phone||'',
-    avail: entry.avail,
-    off_week: entry.offWeek,
-    vacations: entry.vacations,
-    comment: entry.comment||'',
-    week_start: weekStart
-  });
-  return !error;
-}
-
-async function updateResponse(id, changes){
-  const {error} = await db.from('responses').update(changes).eq('id',id);
-  return !error;
-}
-
-async function deleteResponse(id){
-  const {error} = await db.from('responses').delete().eq('id',id);
-  return !error;
-}
-
-async function archiveCurrentWeek(){
-  const weekStart = toDateStr(CURRENT_MONDAY);
-  const data = await loadCurrentWeek();
-  if(data.length===0)return true;
-  const {error} = await db.from('archive').insert({
-    week_start: weekStart,
-    week_label: fmtWeekRange(CURRENT_MONDAY),
-    responses: data
-  });
-  if(error){console.error(error);return false;}
-  // Delete current responses
-  await db.from('responses').delete().eq('week_start',weekStart);
-  return true;
-}
-
-async function loadArchive(){
-  const {data,error} = await db.from('archive').select('*').order('week_start',{ascending:false});
-  if(error){console.error(error);return[];}
-  return data||[];
-}
-
-// ── Week management ──
-function getCurrentMondayFromStorage(){
+// Week state — stored in localStorage so it persists across sessions
+function getCurrentMonday(){
   const s=localStorage.getItem('kona_week_start');
-  if(s)return new Date(s);
+  if(s){const d=new Date(s);if(!isNaN(d))return d;}
   const m=getNextMonday();
   localStorage.setItem('kona_week_start',m.toISOString());
   return m;
 }
 
-function showNewWeekConfirm(){
-  document.getElementById('nwCount').textContent=currentData.length;
-  document.getElementById('newWeekConfirm').classList.add('open');
+let CURRENT_MONDAY=getCurrentMonday();
+let WD=getWeekDates(CURRENT_MONDAY);
+let currentData=[];
+let selectedDay=0,selectedCell=null,offWeek=false,pendingVacs=[];
+const dayState=WD.map(()=>({on:true,startSi:8,endSi:19}));
+const dayUnavail={};
+
+// Column order for draggable grid — stores employee indices
+let colOrder=[];
+
+// ── Supabase ──
+async function loadCurrentWeek(){
+  const {data,error}=await db.from('responses').select('*').eq('week_start',toDateStr(CURRENT_MONDAY));
+  if(error){console.error(error);return[];}
+  return data||[];
 }
+async function saveResponse(entry){
+  const {error}=await db.from('responses').insert({name:entry.name,phone:entry.phone||'',avail:entry.avail,off_week:entry.offWeek,vacations:entry.vacations,comment:entry.comment||'',week_start:toDateStr(CURRENT_MONDAY)});
+  return !error;
+}
+async function updateResponse(id,changes){const {error}=await db.from('responses').update(changes).eq('id',id);return !error;}
+async function deleteResponse(id){const {error}=await db.from('responses').delete().eq('id',id);return !error;}
+async function archiveCurrentWeek(){
+  const weekStart=toDateStr(CURRENT_MONDAY);
+  const data=await loadCurrentWeek();
+  if(data.length===0)return true;
+  const {error}=await db.from('archive').insert({week_start:weekStart,week_label:fmtWeekRange(CURRENT_MONDAY),responses:data});
+  if(error){console.error(error);return false;}
+  await db.from('responses').delete().eq('week_start',weekStart);
+  return true;
+}
+async function loadArchive(){
+  const {data,error}=await db.from('archive').select('*').order('week_start',{ascending:false});
+  if(error){console.error(error);return[];}
+  return data||[];
+}
+
+// ── New week — FIX #2: always advance by exactly 7 days from current week ──
+function showNewWeekConfirm(){document.getElementById('nwCount').textContent=currentData.length;document.getElementById('newWeekConfirm').classList.add('open');}
 function hideNewWeekConfirm(){document.getElementById('newWeekConfirm').classList.remove('open');}
 
 async function confirmNewWeek(){
   const btn=document.querySelector('#newWeekConfirm .btn');
   btn.textContent='Archiving…';btn.disabled=true;
-  const ok = await archiveCurrentWeek();
+  const ok=await archiveCurrentWeek();
   if(!ok){alert('Error archiving. Please try again.');btn.textContent='Yes, archive and start fresh';btn.disabled=false;return;}
-  const newMon=getNextMonday(new Date());
+  // FIX: advance exactly 7 days from current week, not recalculate from today
+  const newMon=addDays(CURRENT_MONDAY,7);
   CURRENT_MONDAY=newMon;
   WD=getWeekDates(newMon);
   localStorage.setItem('kona_week_start',newMon.toISOString());
-  currentData=[];
-  selectedCell=null;
+  currentData=[];selectedCell=null;colOrder=[];
   hideNewWeekConfirm();
   rebuildDayCards();
   updateWeekLabels();
   await renderDashboard();
   const box=document.getElementById('successMsg');
   box.innerHTML=`<strong>New week started!</strong> The week of ${fmtWeekRange(newMon)} is now open. Check the Archive tab to see last week's data.`;
-  box.style.display='block';
-  setTimeout(()=>box.style.display='none',6000);
+  box.style.display='block';setTimeout(()=>box.style.display='none',6000);
 }
 
 function updateWeekLabels(){
   document.getElementById('weekOf').textContent=fmtWeekRange(CURRENT_MONDAY);
   document.getElementById('mainSub').textContent=`Week of ${fmtDate(WD[0])}`;
-  const span=document.getElementById('weekRangeSpan');
-  if(span)span.textContent=`— ${fmtDate(WD[0])} to ${fmtDate(WD[6])}`;
 }
 
 // ── Lock check ──
@@ -475,15 +390,13 @@ async function checkLocked(){
   const name=document.getElementById('empName').value.trim().toLowerCase();
   if(!name){document.getElementById('lockedMsg').style.display='none';document.getElementById('formBody').style.display='block';return;}
   const existing=currentData.find(e=>e.name.toLowerCase()===name);
-  const locked=document.getElementById('lockedMsg');
-  const body=document.getElementById('formBody');
   if(existing){
-    locked.style.display='block';
-    locked.innerHTML=`<strong>Already submitted!</strong> We already have your availability for the week of ${fmtDate(WD[0])}–${fmtDate(WD[6])}. If you need to make changes, please text or talk to your manager.`;
-    body.style.display='none';
+    document.getElementById('lockedMsg').style.display='block';
+    document.getElementById('lockedMsg').innerHTML=`<strong>Already submitted!</strong> We already have your availability for the week of ${fmtDate(WD[0])}–${fmtDate(WD[6])}. If you need to make changes, please text or talk to your manager.`;
+    document.getElementById('formBody').style.display='none';
   } else {
-    locked.style.display='none';
-    body.style.display='block';
+    document.getElementById('lockedMsg').style.display='none';
+    document.getElementById('formBody').style.display='block';
   }
 }
 
@@ -492,15 +405,15 @@ function buildDayCards(){
   const wrap=document.getElementById('dayCardsWrap');
   wrap.innerHTML=WD.map((d,di)=>`
     <div class="day-card on" id="dc_${di}">
-      <div class="day-card-header" style="cursor:default">
+      <div class="day-card-header">
         <div><div class="day-name-big">${DAY_FULL[di]}</div><div class="day-date-small">${fmtDate(d)}</div></div>
       </div>
       <div class="day-body" id="db_${di}">
         <div class="shift-pills">
-          <div class="shift-pill" onclick="setShift(${di},9,23)" style="background:#e6f9f3;border-color:#00916a;color:#00916a;font-weight:600">All day (9am–11pm)</div>
+          <div style="padding:7px 12px;font-size:12px;border:1px solid #00916a;border-radius:20px;background:#e6f9f3;color:#00916a;cursor:pointer;font-weight:600;white-space:nowrap" onclick="setShift(${di},9,23)">All day (9am–11pm)</div>
           <button class="unavail-day-btn" id="unavailBtn_${di}" onclick="toggleUnavailDay(${di})">Unavailable all day</button>
         </div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">Use the sliders below to set your start and end time. Drag the left handle for when you can start, right handle for when you finish.</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.5">Use the sliders below to set your start and end time. Drag the left handle for when you can start, the right handle for when you finish.</div>
         <div class="range-time-labels"><span>9am</span><span>10</span><span>11</span><span>12pm</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11pm</span></div>
         <div class="range-wrap"><div class="range-track" id="rt_${di}">
           <div class="range-fill" id="rf_${di}"></div>
@@ -512,22 +425,11 @@ function buildDayCards(){
     </div>`).join('');
   WD.forEach((_,di)=>initSlider(di));
 }
-
 function rebuildDayCards(){
-  for(let i=0;i<7;i++)dayState[i]={on:true,startSi:8,endSi:19};
+  for(let i=0;i<7;i++){dayState[i]={on:true,startSi:8,endSi:19};dayUnavail[i]=false;}
   buildDayCards();
 }
-
-function toggleDay(di){
-  if(offWeek)return;
-  dayState[di].on=!dayState[di].on;
-  document.getElementById(`dc_${di}`).classList.toggle('on',dayState[di].on);
-  document.getElementById(`dc_${di}`).classList.toggle('off',!dayState[di].on);
-  document.getElementById(`tog_${di}`).classList.toggle('on',dayState[di].on);
-  updateRangeDisplay(di);
-}
 function setShift(di,sh,eh){
-  if(!dayState[di].on)return;
   const s=SLOTS.findIndex(x=>x.h===sh&&x.m===0);
   let e=SLOTS.findIndex(x=>x.h===eh&&x.m===0);
   if(e<0)e=TOTAL_SLOTS-1;else e=Math.max(0,e-1);
@@ -555,8 +457,8 @@ function initSlider(di){
         const cx=ev.touches?ev.touches[0].clientX:ev.clientX;
         let pct=Math.max(0,Math.min(100,(cx-rect.left)/rect.width*100));
         const si=pctToSlot(pct);
-        if(which==='left'){dayState[di].startSi=Math.min(si,dayState[di].endSi-1);}
-        else{dayState[di].endSi=Math.max(si,dayState[di].startSi+1);}
+        if(which==='left')dayState[di].startSi=Math.min(si,dayState[di].endSi-1);
+        else dayState[di].endSi=Math.max(si,dayState[di].startSi+1);
         updateRangeDisplay(di);
       };
       const up=()=>{document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',up);document.removeEventListener('touchmove',move);document.removeEventListener('touchend',up);};
@@ -567,9 +469,22 @@ function initSlider(di){
   });
   updateRangeDisplay(di);
 }
+function toggleUnavailDay(di){
+  dayUnavail[di]=!dayUnavail[di];
+  const btn=document.getElementById(`unavailBtn_${di}`);
+  const wrap=document.getElementById(`db_${di}`);
+  if(dayUnavail[di]){
+    btn.textContent='Undo — I am available this day';btn.classList.add('active');
+    wrap.querySelectorAll('.range-time-labels,.range-wrap,.range-selected').forEach(el=>el.style.display='none');
+  } else {
+    btn.textContent='Unavailable all day';btn.classList.remove('active');
+    wrap.querySelectorAll('.range-time-labels,.range-wrap,.range-selected').forEach(el=>el.style.display='');
+  }
+}
+// FIX #1: off_week employees excluded from avail calculation
 function dayStateToAvail(){
   const avail=[];
-  WD.forEach((_,di)=>{if(dayState[di].on&&!dayUnavail[di]){for(let si=dayState[di].startSi;si<=dayState[di].endSi;si++)avail.push(`${di}_${si}`);}});
+  WD.forEach((_,di)=>{if(!dayUnavail[di]){for(let si=dayState[di].startSi;si<=dayState[di].endSi;si++)avail.push(`${di}_${si}`);}});
   return avail;
 }
 function toggleOffWeek(){
@@ -590,7 +505,6 @@ function removeVacation(i){pendingVacs.splice(i,1);renderVacList();}
 function renderVacList(){
   document.getElementById('vacList').innerHTML=pendingVacs.map((v,i)=>`<div class="vac-entry"><div><div style="font-size:13px;font-weight:500">${fmtDateFull(v.from)} – ${fmtDateFull(v.to)}</div>${v.note?`<div style="font-size:12px;color:var(--muted);margin-top:2px">${v.note}</div>`:''}</div><button class="vac-remove" onclick="removeVacation(${i})">×</button></div>`).join('');
 }
-
 async function submitForm(){
   const name=document.getElementById('empName').value.trim();
   const phone=document.getElementById('empPhone').value.trim();
@@ -598,24 +512,21 @@ async function submitForm(){
   if(!name){alert('Please enter your name.');return;}
   if(currentData.find(e=>e.name.toLowerCase()===name.toLowerCase())){checkLocked();return;}
   const avail=offWeek?[]:dayStateToAvail();
-  if(!offWeek&&!avail.length){alert('Please toggle on at least one day, or mark yourself unavailable all week.');return;}
-  const btn=document.getElementById('submitBtn');
-  btn.textContent='Saving…';btn.disabled=true;
+  if(!offWeek&&!avail.length){alert('Please select at least one time slot, or mark yourself unavailable all week.');return;}
+  const btn=document.getElementById('submitBtn');btn.textContent='Saving…';btn.disabled=true;
   const ok=await saveResponse({name,phone,avail,offWeek,vacations:pendingVacs,comment});
   btn.textContent='Submit availability';btn.disabled=false;
   if(!ok){alert('Error saving. Please try again.');return;}
   currentData=await loadCurrentWeek();
   const box=document.getElementById('successMsg');
-  const dayNames=WD.map((d,i)=>dayState[i].on?`${DAYS[i]} ${fmtDate(d)}`:null).filter(Boolean);
   box.innerHTML=offWeek
     ?`<strong>Got it, ${name}!</strong> You're marked unavailable for ${fmtDate(WD[0])}–${fmtDate(WD[6])}. If anything changes, reach out to your manager.`
-    :`<strong>Thanks, ${name}!</strong> Saved for ${fmtDate(WD[0])}–${fmtDate(WD[6])}.<br>Days: ${dayNames.join(', ')}.${comment?' Your note has been sent.':''}<br><span style="font-size:12px;opacity:0.85">Need to make changes? Text or talk to your manager.</span>`;
+    :`<strong>Thanks, ${name}!</strong> Saved for ${fmtDate(WD[0])}–${fmtDate(WD[6])}.<br><span style="font-size:12px;opacity:0.85">Need to make changes? Text or talk to your manager.</span>`;
   box.style.display='block';
   document.getElementById('empName').value='';document.getElementById('empPhone').value='';
   pendingVacs=[];resetForm();checkLocked();
   setTimeout(()=>box.style.display='none',8000);
 }
-
 function resetForm(){
   offWeek=false;
   document.getElementById('offWeekBtn').textContent='Unavailable all week';
@@ -623,14 +534,11 @@ function resetForm(){
   document.getElementById('dayCardsWrap').style.opacity='1';
   document.getElementById('dayCardsWrap').style.pointerEvents='';
   WD.forEach((_,di)=>{
-    dayState[di]={on:true,startSi:8,endSi:19};
-    dayUnavail[di]=false;
-    const c=document.getElementById(`dc_${di}`);
-    if(c){c.classList.add('on');c.classList.remove('off');}
-    const unavailBtn=document.getElementById(`unavailBtn_${di}`);
-    if(unavailBtn){unavailBtn.textContent='Unavailable all day';unavailBtn.classList.remove('active');}
-    const db=document.getElementById(`db_${di}`);
-    if(db)db.querySelectorAll('.shift-pill,.range-time-labels,.range-wrap,.range-selected').forEach(el=>el.style.display='');
+    dayState[di]={on:true,startSi:8,endSi:19};dayUnavail[di]=false;
+    const c=document.getElementById(`dc_${di}`);if(c){c.classList.add('on');c.classList.remove('off');}
+    const ub=document.getElementById(`unavailBtn_${di}`);if(ub){ub.textContent='Unavailable all day';ub.classList.remove('active');}
+    const db2=document.getElementById(`db_${di}`);
+    if(db2)db2.querySelectorAll('.range-time-labels,.range-wrap,.range-selected').forEach(el=>el.style.display='');
     updateRangeDisplay(di);
   });
   pendingVacs=[];renderVacList();
@@ -653,72 +561,88 @@ function switchTab(t,btn){
   if(t==='archive')renderArchive();
 }
 
-// ── Owner edit ──
-let editingId=null,editDayState=[];
+// ── FIX #4: Inline edit (opens under the employee row) ──
+let editingId=null;
 function openEdit(id){
+  // Close any open edit first
+  document.querySelectorAll('.inline-edit').forEach(el=>el.classList.remove('open'));
+  if(editingId===id){editingId=null;return;}
   editingId=id;
   const e=currentData.find(x=>x.id===id);if(!e)return;
-  document.getElementById('editModalTitle').textContent=`Editing: ${e.name}`;
-  editDayState=WD.map((_,di)=>{
+  const editDayState=WD.map((_,di)=>{
     const slots=(e.avail||[]).filter(a=>a.startsWith(di+'_')).map(a=>parseInt(a.split('_')[1]));
     const on=slots.length>0;
     return{on,startSi:on?Math.min(...slots):8,endSi:on?Math.max(...slots):19};
   });
-
-  // Build slot options for dropdowns
-  const slotOptions=SLOTS.map((s,si)=>`<option value="${si}">${s.label}</option>`).join('');
-
-  document.getElementById('editDayList').innerHTML=editDayState.map((ds,di)=>`
-    <div class="edit-day-row" style="flex-wrap:wrap;gap:6px;padding:10px 0">
-      <div style="display:flex;align-items:center;gap:10px;width:100%">
-        <div class="edit-toggle ${ds.on?'on':''}" id="etog_${di}" onclick="toggleEditDay(${di})"><div class="edit-toggle-knob"></div></div>
-        <div style="font-size:13px;font-weight:600;color:var(--navy)">${DAY_FULL[di]}</div>
-        <div style="font-size:11px;color:var(--muted)">${fmtDate(WD[di])}</div>
-      </div>
-      <div id="editTimeRow_${di}" style="display:${ds.on?'flex':'none'};align-items:center;gap:8px;flex-wrap:wrap;padding-left:48px;width:100%">
-        <label style="margin:0;font-size:11px">From</label>
-        <select id="estart_${di}" onchange="editDayState[${di}].startSi=parseInt(this.value)" style="padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:#fff;color:var(--navy)">
-          ${SLOTS.map((s,si)=>`<option value="${si}" ${si===ds.startSi?'selected':''}>${s.label}</option>`).join('')}
-        </select>
-        <label style="margin:0;font-size:11px">To</label>
-        <select id="eend_${di}" onchange="editDayState[${di}].endSi=parseInt(this.value)" style="padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:#fff;color:var(--navy)">
-          ${SLOTS.map((s,si)=>`<option value="${si}" ${si===ds.endSi?'selected':''}>${fmtBlockEnd(si)}</option>`).join('')}
-        </select>
-      </div>
-    </div>`).join('');
-  document.getElementById('editModal').classList.add('open');
+  const el=document.getElementById(`edit_${id}`);
+  if(!el)return;
+  el.innerHTML=`
+    <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:10px">Editing: ${e.name}</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <button class="btn sm" onclick="editMarkOffWeek('${id}')" style="color:var(--red);border-color:rgba(214,48,49,0.35);background:var(--red-light)">Mark off all week</button>
+      <button class="btn sm" onclick="editRemove('${id}')">Remove submission</button>
+    </div>
+    ${editDayState.map((ds,di)=>`
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div class="edit-toggle ${ds.on?'on':''}" id="iet_${id}_${di}" onclick="toggleInlineDay('${id}',${di})"><div class="edit-toggle-knob"></div></div>
+        <div style="font-size:13px;font-weight:600;min-width:80px">${DAY_FULL[di]}</div>
+        <div id="ietr_${id}_${di}" style="display:${ds.on?'flex':'none'};align-items:center;gap:6px;flex-wrap:wrap">
+          <span style="font-size:11px;color:var(--muted)">From</span>
+          <select id="ies_${id}_${di}" style="padding:4px 6px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;color:var(--navy)">
+            ${SLOTS.map((s,si)=>`<option value="${si}" ${si===ds.startSi?'selected':''}>${s.label}</option>`).join('')}
+          </select>
+          <span style="font-size:11px;color:var(--muted)">To</span>
+          <select id="iee_${id}_${di}" style="padding:4px 6px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;color:var(--navy)">
+            ${SLOTS.map((s,si)=>`<option value="${si}" ${si===ds.endSi?'selected':''}>${fmtBlockEnd(si)}</option>`).join('')}
+          </select>
+        </div>
+      </div>`).join('')}
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+      <button class="btn sm" onclick="closeInlineEdit()">Cancel</button>
+      <button class="btn sm" onclick="saveInlineEdit('${id}')" style="background:var(--cyan);color:#fff;border-color:var(--cyan);font-weight:600">Save changes</button>
+    </div>`;
+  el.classList.add('open');
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-function toggleEditDay(di){
-  editDayState[di].on=!editDayState[di].on;
-  document.getElementById(`etog_${di}`).classList.toggle('on',editDayState[di].on);
-  document.getElementById(`editTimeRow_${di}`).style.display=editDayState[di].on?'flex':'none';
+function toggleInlineDay(id,di){
+  const tog=document.getElementById(`iet_${id}_${di}`);
+  const row=document.getElementById(`ietr_${id}_${di}`);
+  const isOn=tog.classList.toggle('on');
+  row.style.display=isOn?'flex':'none';
 }
-async function editMarkOffWeek(){
-  await updateResponse(editingId,{off_week:true,avail:[]});
-  currentData=await loadCurrentWeek();
-  closeEdit();renderDashboard();
+function closeInlineEdit(){
+  document.querySelectorAll('.inline-edit').forEach(el=>el.classList.remove('open'));
+  editingId=null;
 }
-async function editClearSubmission(){
-  if(!confirm('Remove this submission? They\'ll be able to resubmit.'))return;
-  await deleteResponse(editingId);
-  currentData=await loadCurrentWeek();
-  closeEdit();renderDashboard();
-}
-async function saveEdit(){
+async function saveInlineEdit(id){
+  const e=currentData.find(x=>x.id===id);if(!e)return;
   const avail=[];
-  editDayState.forEach((ds,di)=>{if(ds.on){for(let si=ds.startSi;si<=ds.endSi;si++)avail.push(`${di}_${si}`);}});
-  const offW=avail.length===0&&editDayState.every(d=>!d.on);
-  await updateResponse(editingId,{avail,off_week:offW});
+  WD.forEach((_,di)=>{
+    const tog=document.getElementById(`iet_${id}_${di}`);
+    if(tog&&tog.classList.contains('on')){
+      const startSi=parseInt(document.getElementById(`ies_${id}_${di}`).value);
+      const endSi=parseInt(document.getElementById(`iee_${id}_${di}`).value);
+      for(let si=startSi;si<=endSi;si++)avail.push(`${di}_${si}`);
+    }
+  });
+  const offW=avail.length===0;
+  await updateResponse(id,{avail,off_week:offW});
   currentData=await loadCurrentWeek();
-  closeEdit();renderDashboard();
+  closeInlineEdit();renderDashboard();
 }
-function closeEdit(){document.getElementById('editModal').classList.remove('open');}
+async function editMarkOffWeek(id){
+  await updateResponse(id,{off_week:true,avail:[]});
+  currentData=await loadCurrentWeek();closeInlineEdit();renderDashboard();
+}
+async function editRemove(id){
+  if(!confirm('Remove this submission? They\'ll be able to resubmit.'))return;
+  await deleteResponse(id);currentData=await loadCurrentWeek();closeInlineEdit();renderDashboard();
+}
 
-// ── Dashboard render ──
+// ── Dashboard ──
 function getBlocks(emp,di){
-  const avail=emp.avail||[];
-  const blocks=[];let inBlock=false,start=0;
+  const avail=emp.avail||[];const blocks=[];let inBlock=false,start=0;
   SLOTS.forEach((_,si)=>{const has=avail.includes(`${di}_${si}`);if(has&&!inBlock){inBlock=true;start=si;}if(!has&&inBlock){blocks.push({startSi:start,endSi:si-1});inBlock=false;}});
   if(inBlock)blocks.push({startSi:start,endSi:SLOTS.length-1});return blocks;
 }
@@ -732,38 +656,68 @@ function buildDayTabs(){
 }
 function selectDay(di){selectedDay=di;selectedCell=null;document.querySelectorAll('.day-tab').forEach((b,i)=>b.classList.toggle('active',i===di));renderGrid();showEmptyDetail();}
 
+// ── FIX #6: Draggable columns ──
+let dragSrcCol=null;
+function setupDragCols(){
+  document.querySelectorAll('#dashTable th.draggable').forEach(th=>{
+    th.setAttribute('draggable','true');
+    th.addEventListener('dragstart',e=>{dragSrcCol=parseInt(th.dataset.colidx);th.classList.add('dragging');});
+    th.addEventListener('dragend',e=>{th.classList.remove('dragging');document.querySelectorAll('#dashTable th').forEach(t=>t.classList.remove('drag-over'));});
+    th.addEventListener('dragover',e=>{e.preventDefault();th.classList.add('drag-over');});
+    th.addEventListener('dragleave',e=>{th.classList.remove('drag-over');});
+    th.addEventListener('drop',e=>{
+      e.preventDefault();th.classList.remove('drag-over');
+      const destCol=parseInt(th.dataset.colidx);
+      if(dragSrcCol===null||dragSrcCol===destCol)return;
+      const tmp=colOrder[dragSrcCol];colOrder[dragSrcCol]=colOrder[destCol];colOrder[destCol]=tmp;
+      dragSrcCol=null;renderGrid();
+    });
+  });
+}
+
 function renderGrid(){
   const data=currentData;
   document.getElementById('gridTitle').textContent=`${DAYS[selectedDay]}, ${fmtDate(WD[selectedDay])}`;
+  // FIX #1: only count non-off_week employees
+  const activeData=data.filter(e=>!e.off_week);
+  if(colOrder.length!==data.length)colOrder=data.map((_,i)=>i);
   const t=document.getElementById('dashTable');
   let html='<thead><tr><th class="tc">Time</th>';
-  if(data.length){
-    data.forEach((e,ei)=>{const col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();html+=`<th style="min-width:28px"><div style="width:24px;height:24px;border-radius:50%;background:${e.off_week?'rgba(232,75,75,0.2)':col.bg};color:${e.off_week?'var(--red)':col.fg};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;margin:0 auto" title="${e.name}">${init}</div></th>`;});
-    html+='<th style="min-width:32px;color:var(--muted)">All</th>';
-  }
-  html+='</tr></thead><tbody>';
+  colOrder.forEach((ei,ci)=>{
+    const e=data[ei];const col=AVATAR_COLORS[ei%7];
+    const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+    // FIX #5: dark text, strong contrast
+    html+=`<th class="draggable" data-colidx="${ci}" style="min-width:32px" title="${e.name} (drag to reorder)">
+      <div class="grid-avatar" style="background:${col.bg};color:${col.fg}">${init}</div>
+    </th>`;
+  });
+  html+='<th style="min-width:32px;color:var(--muted)">All</th></tr></thead><tbody>';
   SLOTS.forEach((s,si)=>{
     const key=`${selectedDay}_${si}`;
+    // FIX #1: exclude off_week employees from count
     const avail=data.filter(e=>!e.off_week&&(e.avail||[]).includes(key));
     const count=avail.length;
-    const total=Math.max(data.filter(e=>!e.off_week).length,1);
-    const op=count===0?0:0.15+0.8*(count/total);
+    const total=Math.max(activeData.length,1);
+    const op=count===0?0:0.2+0.75*(count/total);
     const bg=count>0?`rgba(0,180,216,${op})`:'transparent';
-    const border=count===0?'1px solid #c8dde6':'none';
     const isSel=selectedCell===key;
     const isHour=s.m===0;
-    const rowBg=isHour?'background:#f0f8fc;':'';
-    const topBorder=isHour?'border-top:1px solid #b8dcea;':'';
-    const timeLabel=isHour?`<strong>${s.label}</strong>`:`<span style="font-size:10px;color:#9ab8c8">&nbsp;&nbsp;:30</span>`;
+    const rowBg=isHour?'background:#eaf5fb;':'';
+    const topBorder=isHour?'border-top:2px solid #9fd0e8;':'border-top:1px solid #e0f0f7;';
+    const timeLabel=isHour?`<strong style="font-size:12px;color:var(--navy)">${s.label}</strong>`:`<span style="font-size:10px;color:#9ab8c8;padding-left:6px">:30</span>`;
     html+=`<tr style="${rowBg}${topBorder}"><td class="tc" style="padding:2px 8px 2px 0;white-space:nowrap">${timeLabel}</td>`;
-    if(data.length){
-      data.forEach((e,ei)=>{const col=AVATAR_COLORS[ei%7];const isOff=e.off_week;const a=!isOff&&(e.avail||[]).includes(key);html+=`<td style="padding:1px 2px"><div style="width:24px;height:14px;border-radius:2px;margin:0 auto;background:${isOff?'rgba(214,48,49,0.1)':a?col.bg:'transparent'};border:${isOff?'1px solid rgba(214,48,49,0.2)':a?'none':'0.5px solid #d8edf5'}"></div></td>`;});
-      html+=`<td style="padding:1px 2px"><div class="dcell${isSel?' selected':''}" data-key="${key}" data-si="${si}" style="height:14px;background:${bg};border:${border};color:${count>0?'#ffffff':'transparent'};font-size:10px">${count>0?count:''}</div></td>`;
-    }
+    colOrder.forEach(ei=>{
+      const e=data[ei];const col=AVATAR_COLORS[ei%7];
+      const isOff=e.off_week;
+      const a=!isOff&&(e.avail||[]).includes(key);
+      html+=`<td style="padding:1px 2px"><div style="width:28px;height:14px;border-radius:2px;margin:0 auto;background:${isOff?'rgba(214,48,49,0.12)':a?col.bg:'transparent'};border:${isOff?'1px solid rgba(214,48,49,0.25)':a?'1px solid rgba(0,0,0,0.08)':'1px solid #d8edf5'}"></div></td>`;
+    });
+    html+=`<td style="padding:1px 2px"><div class="dcell${isSel?' selected':''}" data-key="${key}" data-si="${si}" style="width:28px;background:${bg};border:${count===0?'1px solid #c8dde6':'none'}">${count>0?count:''}</div></td>`;
     html+='</tr>';
   });
   html+='</tbody>';t.innerHTML=html;
   document.querySelectorAll('.dcell').forEach(cell=>{cell.addEventListener('click',()=>{document.querySelectorAll('.dcell').forEach(c=>c.classList.remove('selected'));cell.classList.add('selected');selectedCell=cell.dataset.key;showDetail(parseInt(cell.dataset.si));});});
+  setupDragCols();
 }
 
 function showEmptyDetail(){document.getElementById('detailPanel').innerHTML=`<div class="empty-detail"><div style="font-size:26px;margin-bottom:8px">👆</div><div>Click a cell to see<br>who's available and<br>their full shift window</div></div>`;}
@@ -773,10 +727,10 @@ function showDetail(si){
   const avail=data.filter(e=>!e.off_week&&(e.avail||[]).includes(key));
   const offAll=data.filter(e=>e.off_week);
   const unavail=data.filter(e=>!e.off_week&&!(e.avail||[]).includes(key));
-  let html=`<div style="font-size:13px;font-weight:500;margin-bottom:2px">At ${SLOTS[si].label}</div><div style="font-size:11px;color:var(--muted);margin-bottom:10px">${DAYS[di]}, ${fmtDate(WD[di])} · ${avail.length} available</div>`;
-  if(avail.length){html+=`<div class="sec-label">Available — full shift</div>`;avail.forEach(e=>{const ei=data.indexOf(e),col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();const block=blockContaining(e,di,si);const bs=block?(slotMinutes(block.startSi)-DAY_START_MIN)/DAY_SPAN*100:0;const be=block?((slotMinutes(block.endSi)+30)-DAY_START_MIN)/DAY_SPAN*100:0;html+=`<div class="person-row"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${col.bg};color:${col.fg}">${init}</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:500;margin-bottom:3px">${e.name}</div><div class="avail-bar-wrap"><div class="avail-bar" style="left:${bs.toFixed(1)}%;width:${Math.max(be-bs,3).toFixed(1)}%;background:${col.bg};border:1.5px solid ${col.fg}"></div></div><div style="display:flex;justify-content:space-between;margin-top:2px"><span style="font-size:10px;color:var(--muted)">${block?fmtSlot(block.startSi):'—'}</span><span style="font-size:10px;color:var(--muted)">${block?fmtBlockEnd(block.endSi):'—'}</span></div></div></div>`;});}
-  if(offAll.length){html+=`<div class="sec-label" style="margin-top:10px">Off all week</div>`;offAll.forEach(e=>{const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();html+=`<div class="person-row" style="opacity:0.55"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:rgba(232,75,75,0.2);color:var(--red)">${init}</div><div><div style="font-size:12px;font-weight:500">${e.name}</div><div style="font-size:10px;color:var(--red);margin-top:1px">Off all week</div></div></div>`;});}
-  if(unavail.length){html+=`<div class="sec-label" style="margin-top:10px">Not available</div>`;unavail.forEach(e=>{const ei=data.indexOf(e),col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();const blocks=getBlocks(e,di);html+=`<div class="person-row" style="opacity:0.4"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${col.bg};color:${col.fg}">${init}</div><div><div style="font-size:12px;font-weight:500">${e.name}</div><div style="font-size:10px;color:var(--muted);margin-top:1px">${blocks.length?'Avail: '+blocks.map(b=>`${fmtSlot(b.startSi)}–${fmtBlockEnd(b.endSi)}`).join(', '):'Not available today'}</div></div></div>`;});}
+  let html=`<div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:2px">At ${SLOTS[si].label}</div><div style="font-size:11px;color:var(--muted);margin-bottom:10px">${DAYS[di]}, ${fmtDate(WD[di])} · ${avail.length} available</div>`;
+  if(avail.length){html+=`<div class="sec-label">Available — full shift</div>`;avail.forEach(e=>{const ei=data.indexOf(e),col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();const block=blockContaining(e,di,si);const bs=block?(slotMinutes(block.startSi)-DAY_START_MIN)/DAY_SPAN*100:0;const be=block?((slotMinutes(block.endSi)+30)-DAY_START_MIN)/DAY_SPAN*100:0;html+=`<div class="person-row"><div class="avatar" style="width:28px;height:28px;font-size:10px;font-weight:800;background:${col.bg};color:${col.fg}">${init}</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;margin-bottom:3px">${e.name}</div><div class="avail-bar-wrap"><div class="avail-bar" style="left:${bs.toFixed(1)}%;width:${Math.max(be-bs,3).toFixed(1)}%;background:${col.bg};border:1.5px solid ${col.fg}"></div></div><div style="display:flex;justify-content:space-between;margin-top:2px"><span style="font-size:10px;color:var(--muted)">${block?fmtSlot(block.startSi):'—'}</span><span style="font-size:10px;color:var(--muted)">${block?fmtBlockEnd(block.endSi):'—'}</span></div></div></div>`;});}
+  if(offAll.length){html+=`<div class="sec-label" style="margin-top:10px">Off all week</div>`;offAll.forEach(e=>{const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();html+=`<div class="person-row" style="opacity:0.5"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:var(--red-light);color:var(--red)">${init}</div><div><div style="font-size:12px;font-weight:600">${e.name}</div><div style="font-size:10px;color:var(--red);margin-top:1px">Off all week</div></div></div>`;});}
+  if(unavail.length){html+=`<div class="sec-label" style="margin-top:10px">Not available at this time</div>`;unavail.forEach(e=>{const ei=data.indexOf(e),col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();const blocks=getBlocks(e,di);html+=`<div class="person-row" style="opacity:0.4"><div class="avatar" style="width:28px;height:28px;font-size:10px;font-weight:800;background:${col.bg};color:${col.fg}">${init}</div><div><div style="font-size:12px;font-weight:600">${e.name}</div><div style="font-size:10px;color:var(--muted);margin-top:1px">${blocks.length?'Avail: '+blocks.map(b=>`${fmtSlot(b.startSi)}–${fmtBlockEnd(b.endSi)}`).join(', '):'Not available today'}</div></div></div>`;});}
   document.getElementById('detailPanel').innerHTML=html;
 }
 
@@ -784,15 +738,14 @@ function renderOwnerComments(data){
   const el=document.getElementById('ownerComments');
   const wc=data.filter(e=>e.comment&&e.comment.trim());
   if(!wc.length){el.innerHTML='<p class="no-data">No comments yet.</p>';return;}
-  el.innerHTML=wc.map(e=>{const ei=data.indexOf(e),col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();const ts=new Date(e.submitted_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});return`<div style="margin-bottom:12px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div class="avatar" style="width:26px;height:26px;font-size:10px;background:${col.bg};color:${col.fg}">${init}</div><div style="font-size:13px;font-weight:500">${e.name}</div><div style="font-size:11px;color:var(--muted);margin-left:auto">${ts}</div></div><div class="comment-bubble">${e.comment}</div></div>`;}).join('');
+  el.innerHTML=wc.map(e=>{const ei=data.indexOf(e),col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();const ts=new Date(e.submitted_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});return`<div style="margin-bottom:12px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div class="avatar" style="width:26px;height:26px;font-size:10px;font-weight:800;background:${col.bg};color:${col.fg}">${init}</div><div style="font-size:13px;font-weight:600">${e.name}</div><div style="font-size:11px;color:var(--muted);margin-left:auto">${ts}</div></div><div class="comment-bubble">${e.comment}</div></div>`;}).join('');
 }
-
 function renderOwnerVacations(data){
   const el=document.getElementById('ownerVacList');
   const all=[];data.forEach(e=>{if(e.vacations&&e.vacations.length)e.vacations.forEach(v=>all.push({...v,name:e.name,ei:data.indexOf(e)}));});
   all.sort((a,b)=>a.from.localeCompare(b.from));
   if(!all.length){el.innerHTML='<p class="no-data">No upcoming time off reported.</p>';return;}
-  el.innerHTML=all.map(v=>{const col=AVATAR_COLORS[v.ei%7];const init=v.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();return`<div class="vac-owner-row"><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:28px;height:28px;font-size:10px;background:${col.bg};color:${col.fg}">${init}</div><div><div style="font-weight:500;font-size:13px">${v.name}</div><div style="font-size:12px;color:var(--muted);margin-top:1px">${fmtDateFull(v.from)} – ${fmtDateFull(v.to)}${v.note?' · '+v.note:''}</div></div></div></div>`;}).join('');
+  el.innerHTML=all.map(v=>{const col=AVATAR_COLORS[v.ei%7];const init=v.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();return`<div class="vac-owner-row"><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:28px;height:28px;font-size:10px;font-weight:800;background:${col.bg};color:${col.fg}">${init}</div><div><div style="font-weight:600;font-size:13px">${v.name}</div><div style="font-size:12px;color:var(--muted);margin-top:1px">${fmtDateFull(v.from)} – ${fmtDateFull(v.to)}${v.note?' · '+v.note:''}</div></div></div></div>`;}).join('');
 }
 
 async function renderDashboard(){
@@ -811,9 +764,9 @@ async function renderDashboard(){
     const days=e.off_week?[]:WD.map((_,i)=>(e.avail||[]).some(a=>a.startsWith(i+'_'))?DAYS[i]:null).filter(Boolean);
     return`<div class="emp-row">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-        <div class="avatar" style="width:36px;height:36px;font-size:12px;background:${e.off_week?'rgba(232,75,75,0.2)':col.bg};color:${e.off_week?'var(--red)':col.fg}">${init}</div>
+        <div class="avatar" style="width:36px;height:36px;font-size:12px;font-weight:800;background:${e.off_week?'#ffd0d0':col.bg};color:${e.off_week?'var(--red)':col.fg}">${init}</div>
         <div style="flex:1;min-width:0">
-          <div style="font-weight:500;font-size:14px">${e.name}</div>
+          <div style="font-weight:600;font-size:14px">${e.name}</div>
           <div style="font-size:12px;color:var(--muted)">Submitted ${ts}${e.phone?' · '+e.phone:''}</div>
           <div style="font-size:11px;margin-top:2px;color:${e.off_week?'var(--red)':'var(--muted)'};">${e.off_week?'Unavailable all week':'Days: '+days.join(', ')}${e.vacations&&e.vacations.length?' · '+e.vacations.length+' trip(s)':''}${e.comment?' · Note left':''}</div>
         </div>
@@ -821,88 +774,99 @@ async function renderDashboard(){
       </div>
       <div style="display:flex;gap:6px">
         <button class="btn amber-sm" onclick="openEdit('${e.id}')">Edit availability</button>
-        <button class="btn danger-sm" onclick="quickRemove('${e.id}')">Remove</button>
+        <button class="btn danger-sm" onclick="editRemove('${e.id}')">Remove</button>
       </div>
+      <div class="inline-edit" id="edit_${e.id}"></div>
     </div>`;
   }).join('');
-}
-
-async function quickRemove(id){
-  const e=currentData.find(x=>x.id===id);
-  if(!confirm(`Remove ${e?e.name:'this person'}'s submission? They'll be able to resubmit.`))return;
-  await deleteResponse(id);
-  currentData=await loadCurrentWeek();
-  renderDashboard();
 }
 
 async function clearCurrent(){
   if(!confirm('Clear all current responses?'))return;
-  const weekStart=toDateStr(CURRENT_MONDAY);
-  await db.from('responses').delete().eq('week_start',weekStart);
-  currentData=[];renderDashboard();
+  await db.from('responses').delete().eq('week_start',toDateStr(CURRENT_MONDAY));
+  currentData=[];colOrder=[];renderDashboard();
 }
 
-// ── Archive ──
+// ── FIX #3: Archive with mini grid ──
 async function renderArchive(){
   document.getElementById('archiveContent').innerHTML='<p class="loading">Loading archive…</p>';
   const archive=await loadArchive();
   const el=document.getElementById('archiveContent');
-  if(!archive.length){el.innerHTML='<p class="no-data">No archived weeks yet. When you tap "Start new week", the current week\'s responses will be saved here automatically.</p>';return;}
+  if(!archive.length){el.innerHTML='<p class="no-data">No archived weeks yet. When you tap "Start new week", the current week\'s responses will be saved here.</p>';return;}
   el.innerHTML=archive.map((week,wi)=>{
     const responses=week.responses||[];
     const archivedAt=new Date(week.archived_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     const wd=getWeekDates(new Date(week.week_start));
-    const empRows=responses.map((e,ei)=>{
+    const activeResps=responses.filter(e=>!e.off_week);
+
+    // Build mini grid for archive
+    let gridHtml='<div style="overflow-x:auto;margin-top:10px"><table style="border-collapse:collapse;width:100%;font-size:11px"><thead><tr><th style="text-align:left;padding:3px 6px;color:var(--muted);border-bottom:2px solid var(--border)">Time</th>';
+    responses.forEach((e,ei)=>{
       const col=AVATAR_COLORS[ei%7];
       const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+      gridHtml+=`<th style="padding:3px 2px;border-bottom:2px solid var(--border)" title="${e.name}"><div style="width:26px;height:26px;border-radius:50%;background:${col.bg};color:${col.fg};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;margin:0 auto">${init}</div></th>`;
+    });
+    gridHtml+='</tr></thead><tbody>';
+    // Show each day as a section
+    wd.forEach((d,di)=>{
+      gridHtml+=`<tr><td colspan="${responses.length+1}" style="padding:4px 6px;background:#e8f4f8;font-size:11px;font-weight:600;color:var(--navy)">${DAYS[di]}, ${fmtDate(d)}</td></tr>`;
+      SLOTS.forEach((s,si)=>{
+        if(s.m!==0)return; // hourly only in archive
+        const isHour=true;
+        gridHtml+=`<tr style="border-top:1px solid #d8edf5"><td style="padding:2px 6px;font-size:10px;color:var(--muted);white-space:nowrap">${s.label}</td>`;
+        responses.forEach((e,ei)=>{
+          const col=AVATAR_COLORS[ei%7];
+          const isOff=e.off_week;
+          const a=!isOff&&(e.avail||[]).includes(`${di}_${si}`);
+          gridHtml+=`<td style="padding:1px 2px;text-align:center"><div style="width:22px;height:12px;border-radius:2px;margin:0 auto;background:${isOff?'rgba(214,48,49,0.1)':a?col.bg:'transparent'};border:${a?'none':'1px solid #e0eff7'}"></div></td>`;
+        });
+        gridHtml+='</tr>';
+      });
+    });
+    gridHtml+='</tbody></table></div>';
+
+    const empRows=responses.map((e,ei)=>{
+      const col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
       const days=e.off_week?[]:wd.map((_,i)=>(e.avail||[]).some(a=>a.startsWith(i+'_'))?DAYS[i]:null).filter(Boolean);
       return`<div class="archive-emp-row">
-        <div class="avatar" style="width:32px;height:32px;font-size:11px;background:${e.off_week?'rgba(232,75,75,0.2)':col.bg};color:${e.off_week?'var(--red)':col.fg}">${init}</div>
+        <div class="avatar" style="width:30px;height:30px;font-size:10px;font-weight:800;background:${e.off_week?'#ffd0d0':col.bg};color:${e.off_week?'var(--red)':col.fg}">${init}</div>
         <div style="flex:1;min-width:0">
-          <div style="font-size:13px;font-weight:500">${e.name}</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:1px">${e.off_week?'Unavailable all week':'Days: '+days.join(', ')}${e.comment?'<br><em style="color:var(--muted)">Note: '+e.comment+'</em>':''}</div>
+          <div style="font-size:13px;font-weight:600">${e.name}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:1px">${e.off_week?'Unavailable all week':'Days: '+days.join(', ')}${e.comment?'<br><em>Note: '+e.comment+'</em>':''}</div>
         </div>
-        <span class="badge ${e.off_week?'badge-off':''}" style="flex-shrink:0">${e.off_week?'Off':(e.avail||[]).length+' slots'}</span>
+        <span class="badge ${e.off_week?'badge-off':''}">${e.off_week?'Off':(e.avail||[]).length+' slots'}</span>
       </div>`;
     }).join('');
+
     return`<div class="archive-week" id="aw_${wi}">
       <div class="archive-week-header" onclick="toggleArchiveWeek(${wi})">
         <div>
-          <div style="font-size:14px;font-weight:500">${week.week_label||fmtWeekRange(new Date(week.week_start))}</div>
+          <div style="font-size:14px;font-weight:600">${week.week_label||fmtWeekRange(new Date(week.week_start))}</div>
           <div style="font-size:12px;color:var(--muted);margin-top:2px">${responses.length} response${responses.length!==1?'s':''} · Archived ${archivedAt}</div>
         </div>
-        <div style="color:var(--muted);font-size:18px;transition:transform 0.2s" id="aw_arrow_${wi}">›</div>
+        <div style="color:var(--muted);font-size:20px;transition:transform 0.2s" id="aw_arrow_${wi}">›</div>
       </div>
-      <div class="archive-week-body">${empRows||'<p class="no-data" style="padding:8px 0">No responses were recorded.</p>'}</div>
+      <div class="archive-week-body">
+        <div style="font-size:12px;font-weight:600;color:var(--navy);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Responses</div>
+        ${empRows}
+        <div style="font-size:12px;font-weight:600;color:var(--navy);margin:14px 0 0;text-transform:uppercase;letter-spacing:0.4px">Availability grid (hourly)</div>
+        ${gridHtml}
+      </div>
     </div>`;
   }).join('');
 }
 function toggleArchiveWeek(wi){
-  const el=document.getElementById(`aw_${wi}`);
-  const arrow=document.getElementById(`aw_arrow_${wi}`);
+  const el=document.getElementById(`aw_${wi}`),arrow=document.getElementById(`aw_arrow_${wi}`);
   const open=el.classList.toggle('open');
   arrow.style.transform=open?'rotate(90deg)':'';
 }
 
-// ── Init ──
 async function init(){
-  checkOwnerSession();
-  CURRENT_MONDAY=getCurrentMondayFromStorage();
-  WD=getWeekDates(CURRENT_MONDAY);
   updateWeekLabels();
   buildDayCards();
   currentData=await loadCurrentWeek();
   renderDashboard();
 }
-
-function getCurrentMondayFromStorage(){
-  const s=localStorage.getItem('kona_week_start');
-  if(s)return new Date(s);
-  const m=getNextMonday();
-  localStorage.setItem('kona_week_start',m.toISOString());
-  return m;
-}
-
 init();
 </script>
 </body>
