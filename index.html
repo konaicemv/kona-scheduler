@@ -692,9 +692,12 @@ function renderGrid(){
   colOrder.forEach((ei,ci)=>{
     const e=data[ei];const col=AVATAR_COLORS[ei%7];
     const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
-    // FIX #5: dark text, strong contrast
-    html+=`<th class="draggable" data-colidx="${ci}" style="min-width:32px" title="${e.name} (drag to reorder)">
-      <div class="grid-avatar" style="background:${col.bg};color:${col.fg}">${init}</div>
+    const isOff=e.off_week;
+    html+=`<th class="draggable" data-colidx="${ci}" style="min-width:32px" title="${e.name}${isOff?' — Off all week':' (drag to reorder)'}">
+      <div class="grid-avatar" style="background:${isOff?'#ffd0d0':col.bg};color:${isOff?'var(--red)':col.fg};${isOff?'border-color:rgba(214,48,49,0.3)':''}">
+        ${isOff?'✕':init}
+      </div>
+      ${isOff?`<div style="font-size:8px;color:var(--red);font-weight:700;text-align:center;margin-top:1px">OFF</div>`:''}
     </th>`;
   });
   html+='<th style="min-width:32px;color:var(--muted)">All</th></tr></thead><tbody>';
@@ -716,7 +719,7 @@ function renderGrid(){
       const e=data[ei];const col=AVATAR_COLORS[ei%7];
       const isOff=e.off_week;
       const a=!isOff&&(e.avail||[]).includes(key);
-      html+=`<td style="padding:1px 2px"><div style="width:28px;height:14px;border-radius:2px;margin:0 auto;background:${isOff?'rgba(214,48,49,0.12)':a?col.bg:'transparent'};border:${isOff?'1px solid rgba(214,48,49,0.25)':a?'1px solid rgba(0,0,0,0.08)':'1px solid #d8edf5'}"></div></td>`;
+      html+=`<td style="padding:1px 2px"><div style="width:28px;height:14px;border-radius:2px;margin:0 auto;background:${a?col.bg:'transparent'};border:${a?'1px solid rgba(0,0,0,0.08)':'1px solid #d8edf5'}"></div></td>`;
     });
     html+=`<td style="padding:1px 2px"><div class="dcell${isSel?' selected':''}" data-key="${key}" data-si="${si}" style="width:28px;background:${bg};border:${count===0?'1px solid #c8dde6':'none'}">${count>0?count:''}</div></td>`;
     html+='</tr>';
@@ -824,7 +827,7 @@ async function renderArchive(){
           const col=AVATAR_COLORS[ei%7];
           const isOff=e.off_week;
           const a=!isOff&&(e.avail||[]).includes(`${di}_${si}`);
-          gridHtml+=`<td style="padding:1px 2px;text-align:center"><div style="width:22px;height:12px;border-radius:2px;margin:0 auto;background:${isOff?'rgba(214,48,49,0.1)':a?col.bg:'transparent'};border:${a?'none':'1px solid #e0eff7'}"></div></td>`;
+          gridHtml+=`<td style="padding:1px 2px;text-align:center"><div style="width:22px;height:12px;border-radius:2px;margin:0 auto;background:${a?col.bg:'transparent'};border:${a?'none':'1px solid #e0eff7'}"></div></td>`;
         });
         gridHtml+='</tr>';
       });
