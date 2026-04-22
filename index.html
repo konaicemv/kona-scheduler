@@ -311,23 +311,30 @@ function fmtSlot(si){if(si<0||si>=TOTAL_SLOTS)return'—';const s=SLOTS[si],h12=
 function fmtBlockEnd(si){return si+1>=TOTAL_SLOTS?'11:00 PM':fmtSlot(si+1);}
 
 // Week state — stored in localStorage so it persists across sessions
-function getCurrentMonday(){
-  const s=localStorage.getItem('kona_week_start');
-  if(s){const d=new Date(s);if(!isNaN(d))return d;}
-  const m=getNextMonday();
-  localStorage.setItem('kona_week_start',m.toISOString());
-  return m;
-}
-
-let CURRENT_MONDAY=getCurrentMonday();
+// Week state — loaded from Supabase so all devices see the same week
+let CURRENT_MONDAY=new Date(); // placeholder, overwritten in init
 let WD=getWeekDates(CURRENT_MONDAY);
 let currentData=[];
 let selectedDay=0,selectedCell=null,offWeek=false,pendingVacs=[];
 const dayState=WD.map(()=>({on:true,startSi:8,endSi:19}));
 const dayUnavail={};
-
-// Column order for draggable grid — stores employee indices
 let colOrder=[];
+
+async function loadActiveWeek(){
+  const {data,error}=await db.from('settings').select('value').eq('key','active_week_start').single();
+  if(error||!data){
+    // fallback: next monday
+    return getNextMonday();
+  }
+  // parse date string as local date (avoid timezone shift)
+  const parts=data.value.split('-');
+  const d=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+  return d;
+}
+
+async function saveActiveWeek(monday){
+  await db.from('settings').update({value:toDateStr(monday)}).eq('key','active_week_start');
+}
 
 // ── Supabase ──
 async function loadCurrentWeek(){
@@ -365,11 +372,10 @@ async function confirmNewWeek(){
   btn.textContent='Archiving…';btn.disabled=true;
   const ok=await archiveCurrentWeek();
   if(!ok){alert('Error archiving. Please try again.');btn.textContent='Yes, archive and start fresh';btn.disabled=false;return;}
-  // FIX: advance exactly 7 days from current week, not recalculate from today
   const newMon=addDays(CURRENT_MONDAY,7);
   CURRENT_MONDAY=newMon;
   WD=getWeekDates(newMon);
-  localStorage.setItem('kona_week_start',newMon.toISOString());
+  await saveActiveWeek(newMon);
   currentData=[];selectedCell=null;colOrder=[];
   hideNewWeekConfirm();
   rebuildDayCards();
@@ -862,6 +868,11 @@ function toggleArchiveWeek(wi){
 }
 
 async function init(){
+  // Load the active week from Supabase — same for every device
+  CURRENT_MONDAY=await loadActiveWeek();
+  WD=getWeekDates(CURRENT_MONDAY);
+  // Reinitialise dayState for correct week
+  for(let i=0;i<7;i++){dayState[i]={on:true,startSi:8,endSi:19};dayUnavail[i]=false;}
   updateWeekLabels();
   buildDayCards();
   currentData=await loadCurrentWeek();
