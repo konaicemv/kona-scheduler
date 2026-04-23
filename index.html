@@ -692,12 +692,13 @@ function renderGrid(){
   colOrder.forEach((ei,ci)=>{
     const e=data[ei];const col=AVATAR_COLORS[ei%7];
     const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+    const firstName=e.name.split(' ')[0];
     const isOff=e.off_week;
-    html+=`<th class="draggable" data-colidx="${ci}" style="min-width:32px" title="${e.name}${isOff?' — Off all week':' (drag to reorder)'}">
+    html+=`<th class="draggable" data-colidx="${ci}" style="min-width:44px;padding-bottom:4px" title="${e.name}${isOff?' — Off all week':' (drag to reorder)'}">
       <div class="grid-avatar" style="background:${isOff?'#ffd0d0':col.bg};color:${isOff?'var(--red)':col.fg};${isOff?'border-color:rgba(214,48,49,0.3)':''}">
         ${isOff?'✕':init}
       </div>
-      ${isOff?`<div style="font-size:8px;color:var(--red);font-weight:700;text-align:center;margin-top:1px">OFF</div>`:''}
+      <div style="font-size:9px;font-weight:600;color:${isOff?'var(--red)':'var(--navy)'};margin-top:3px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44px">${isOff?'OFF':firstName}</div>
     </th>`;
   });
   html+='<th style="min-width:32px;color:var(--muted)">All</th></tr></thead><tbody>';
