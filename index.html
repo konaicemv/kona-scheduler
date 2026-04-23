@@ -698,7 +698,7 @@ function renderGrid(){
       <div class="grid-avatar" style="background:${isOff?'#ffd0d0':col.bg};color:${isOff?'var(--red)':col.fg};${isOff?'border-color:rgba(214,48,49,0.3)':''}">
         ${isOff?'✕':init}
       </div>
-      <div style="font-size:9px;font-weight:600;color:${isOff?'var(--red)':'var(--navy)'};margin-top:3px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44px">${isOff?'OFF':firstName}</div>
+      <div style="font-size:9px;font-weight:600;color:${isOff?'var(--red)':'var(--navy)'};margin-top:3px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44px">${firstName}</div>
     </th>`;
   });
   html+='<th style="min-width:32px;color:var(--muted)">All</th></tr></thead><tbody>';
@@ -720,7 +720,10 @@ function renderGrid(){
       const e=data[ei];const col=AVATAR_COLORS[ei%7];
       const isOff=e.off_week;
       const a=!isOff&&(e.avail||[]).includes(key);
-      html+=`<td style="padding:1px 2px"><div style="width:28px;height:14px;border-radius:2px;margin:0 auto;background:${a?col.bg:'transparent'};border:${a?'1px solid rgba(0,0,0,0.08)':'1px solid #d8edf5'}"></div></td>`;
+      // Check if employee has ANY slots on this day (not just this slot)
+      const hasAnyToday=!isOff&&(e.avail||[]).some(av=>av.startsWith(`${selectedDay}_`));
+      const showX=!isOff&&!hasAnyToday;
+      html+=`<td style="padding:1px 2px"><div style="width:28px;height:14px;border-radius:2px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;background:${showX?'rgba(214,48,49,0.1)':a?col.bg:'transparent'};border:${showX?'1px solid rgba(214,48,49,0.25)':a?'1px solid rgba(0,0,0,0.08)':'1px solid #d8edf5'};color:${showX?'var(--red)':'transparent'}">${showX?'✕':''}</div></td>`;
     });
     html+=`<td style="padding:1px 2px"><div class="dcell${isSel?' selected':''}" data-key="${key}" data-si="${si}" style="width:28px;background:${bg};border:${count===0?'1px solid #c8dde6':'none'}">${count>0?count:''}</div></td>`;
     html+='</tr>';
