@@ -841,15 +841,37 @@ async function renderArchive(){
     const empRows=responses.map((e,ei)=>{
       const col=AVATAR_COLORS[ei%7];const init=e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
       const days=e.off_week?[]:wd.map((_,i)=>(e.avail||[]).some(a=>a.startsWith(i+'_'))?DAYS[i]:null).filter(Boolean);
+      const vacs=e.vacations&&e.vacations.length?e.vacations.map(v=>`<div style="font-size:11px;color:var(--amber);margin-top:2px">🏖 ${fmtDateFull(v.from)} – ${fmtDateFull(v.to)}${v.note?' ('+v.note+')':''}</div>`).join(''):'';
       return`<div class="archive-emp-row">
         <div class="avatar" style="width:30px;height:30px;font-size:10px;font-weight:800;background:${e.off_week?'#ffd0d0':col.bg};color:${e.off_week?'var(--red)':col.fg}">${init}</div>
         <div style="flex:1;min-width:0">
           <div style="font-size:13px;font-weight:600">${e.name}</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:1px">${e.off_week?'Unavailable all week':'Days: '+days.join(', ')}${e.comment?'<br><em>Note: '+e.comment+'</em>':''}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:1px">${e.off_week?'Unavailable all week':'Days: '+days.join(', ')}</div>
+          ${vacs}
+          ${e.comment?`<div style="font-size:11px;color:var(--muted);margin-top:2px;font-style:italic">Note: ${e.comment}</div>`:''}
         </div>
         <span class="badge ${e.off_week?'badge-off':''}">${e.off_week?'Off':(e.avail||[]).length+' slots'}</span>
       </div>`;
     }).join('');
+
+    // Build a dedicated time off summary for this archived week
+    const allVacs=[];
+    responses.forEach(e=>{if(e.vacations&&e.vacations.length)e.vacations.forEach(v=>allVacs.push({...v,name:e.name,ei:responses.indexOf(e)}));});
+    allVacs.sort((a,b)=>a.from.localeCompare(b.from));
+    const vacSection=allVacs.length?`
+      <div style="font-size:12px;font-weight:600;color:var(--navy);margin:14px 0 6px;text-transform:uppercase;letter-spacing:0.4px">Upcoming time off reported this week</div>
+      ${allVacs.map(v=>{
+        const col=AVATAR_COLORS[v.ei%7];
+        const init=v.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+        return`<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)">
+          <div class="avatar" style="width:26px;height:26px;font-size:9px;font-weight:800;background:${col.bg};color:${col.fg}">${init}</div>
+          <div>
+            <div style="font-size:13px;font-weight:600">${v.name}</div>
+            <div style="font-size:12px;color:var(--amber);margin-top:1px">${fmtDateFull(v.from)} – ${fmtDateFull(v.to)}${v.note?' · '+v.note:''}</div>
+          </div>
+        </div>`;
+      }).join('')}`
+    :`<div style="font-size:12px;font-weight:600;color:var(--navy);margin:14px 0 6px;text-transform:uppercase;letter-spacing:0.4px">Upcoming time off reported this week</div><p class="no-data" style="padding:8px 0">None reported</p>`;
 
     return`<div class="archive-week" id="aw_${wi}">
       <div class="archive-week-header" onclick="toggleArchiveWeek(${wi})">
@@ -862,6 +884,7 @@ async function renderArchive(){
       <div class="archive-week-body">
         <div style="font-size:12px;font-weight:600;color:var(--navy);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Responses</div>
         ${empRows}
+        ${vacSection}
         <div style="font-size:12px;font-weight:600;color:var(--navy);margin:14px 0 0;text-transform:uppercase;letter-spacing:0.4px">Availability grid (hourly)</div>
         ${gridHtml}
       </div>
